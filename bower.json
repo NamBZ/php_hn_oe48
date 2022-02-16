@@ -1,0 +1,18 @@
+{
+  "name": "php_hn_oe48",
+  "description": "",
+  "main": "",
+  "authors": [
+    "NamBZ <nampt.me@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/awesome-academy/php_hn_oe48",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
