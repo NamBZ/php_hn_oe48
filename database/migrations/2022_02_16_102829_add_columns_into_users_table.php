@@ -17,7 +17,7 @@ class AddColumnsIntoUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone');
             $table->string('avatar')->nullable();
-            $table->tinyInteger('role')->unsigned()->default(UserRole::User);
+            $table->tinyInteger('role')->unsigned()->default(UserRole::USER);
             $table->boolean('status')->default(0);
         });
     }

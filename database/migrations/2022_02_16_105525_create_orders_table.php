@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('order_code');
             $table->double('total_price');
-            $table->tinyInteger('status')->unsigned()->default(OrderStatus::new_order);
+            $table->tinyInteger('status')->unsigned()->default(OrderStatus::NEW_ORDER);
             $table->string('reason_canceled')->nullable();
             $table->timestamps();
         });
