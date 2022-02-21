@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->double('retail_price');
             $table->double('original_price');
             $table->double('avg_rate')->default(0);
-            $table->tinyInteger('status')->unsigned()->default(ProductStatus::in_stock);
+            $table->tinyInteger('status')->unsigned()->default(ProductStatus::IN_STOCK);
             $table->timestamps();
             $table->softDeletes();
         });
