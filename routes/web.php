@@ -21,10 +21,10 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin','auth']], function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
 });
 
-Route::group(['middleware' => ['isUser','auth']], function(){
+Route::group(['middleware' => ['isUser', 'auth']], function () {
     Route::get('home', [UserController::class, 'index'])->name('home');
 });
