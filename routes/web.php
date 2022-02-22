@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +22,14 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('language/{language}', [HomeController::class, 'changeLanguage'])->name('language');
+
+Route::get('products/{slug}.html', [ProductController::class, 'detail'])->name('products.show');
+
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
 });
 
 Route::group(['middleware' => ['isUser', 'auth']], function () {
-    Route::get('home', [UserController::class, 'index'])->name('home');
+    Route::get('user', [UserController::class, 'index'])->name('user');
 });
