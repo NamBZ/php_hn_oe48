@@ -1,0 +1,143 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+}
+
+.list-books .properties {
+    margin: 0 12px
+}
+
+.list-books .properties:first-child {
+    margin-left: 0
+}
+
+.list-books .properties:last-child {
+    margin-right: 0;
+    margin-left: 0
+}
+
+.list-books .properties .properties-card {
+    background-color: #fff
+}
+
+.list-books .properties .properties-card .properties-img img {
+    width: 100%
+}
+
+.list-books .properties .properties-card .properties-caption {
+    padding: 14px 20px 2px 20px;
+    -webkit-transition: all .4s ease-out 0s;
+    -moz-transition: all .4s ease-out 0s;
+    -ms-transition: all .4s ease-out 0s;
+    -o-transition: all .4s ease-out 0s;
+    transition: all .4s ease-out 0s
+}
+
+.list-books .properties .properties-card .properties-caption .properties-title{
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.list-books .properties .properties-card .properties-caption .properties-description{
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.list-books .properties .properties-card .properties-caption.properties-caption2 {
+    border: 1px solid #eee1e0;
+    border-top: 0
+}
+
+.list-books .properties .properties-card .properties-caption h3 a {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1a1a1a
+}
+
+@media only screen and (min-width: 992px) and (max-width:1199px) {
+    .list-books .properties .properties-card .properties-caption h3 a {
+        font-size:16px
+    }
+}
+
+.list-books .properties .properties-card .properties-caption P {
+    color: #9498a7;
+    font-size: 14px;
+    margin-bottom: 11px
+}
+
+.list-books .properties .properties-card .properties-caption P span {
+    color: #ff1616;
+    font-size: 16px
+}
+
+@media only screen and (min-width: 768px) and (max-width:991px) {
+    .list-books .properties .properties-card .properties-caption P span {
+        font-size:12px
+    }
+}
+
+.list-books .properties .properties-card .properties-caption .properties-footer {
+    -webkit-transition: all .4s ease-out 0s;
+    -moz-transition: all .4s ease-out 0s;
+    -ms-transition: all .4s ease-out 0s;
+    -o-transition: all .4s ease-out 0s;
+    transition: all .4s ease-out 0s
+}
+
+@media (max-width: 575px) {
+    .list-books .properties .properties-card .properties-caption .properties-footer {
+        padding:19px 10px 20px 12px
+    }
+}
+
+.list-books .properties .properties-card .properties-caption .properties-footer .review .rating i {
+    font-size: 10px;
+    color: #ff5700
+}
+
+.list-books .properties .properties-card .properties-caption .properties-footer .review p {
+    display: inline-block;
+    color: #9498a7;
+    font-size: 14px
+}
+
+.list-books .properties .properties-card .properties-caption .properties-footer .review p span {
+    color: #ff7b2e;
+    font-size: 12px
+}
+
+.list-books .properties .properties-card .properties-caption .properties-footer .price span {
+    cursor: pointer;
+    font-weight: 500;
+    color: #ff1616;
+    font-size: 20px
+}
+
+.list-books .properties:hover .properties-caption {
+    box-shadow: 0 15px 30px rgba(255,22,22,.1)
+}
+
+.list-books .properties:hover .properties-caption h3 a {
+    color: #ff1616
+}
