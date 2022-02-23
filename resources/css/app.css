@@ -1,6 +1,15 @@
 html {
     position: relative;
     min-height: 100%;
+    text-decoration: none;
+}
+
+* {
+    word-wrap:break-word;
+}
+
+img {
+    max-width: 100%;
 }
 
 .footer {
@@ -71,7 +80,8 @@ html {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 6px;
-    color: #1a1a1a
+    color: #1a1a1a;
+    text-decoration: none;
 }
 
 @media only screen and (min-width: 992px) and (max-width:1199px) {
@@ -140,4 +150,14 @@ html {
 
 .list-books .properties:hover .properties-caption h3 a {
     color: #ff1616
+}
+
+.product-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-quantity {
+    max-width: 70px;
 }
