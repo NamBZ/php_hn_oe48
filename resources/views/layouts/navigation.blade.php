@@ -9,15 +9,9 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Search -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <form class="w-100 p-2 me-3">
-                            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <form class="w-100 p-2 me-3" style="max-width: 500px;">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

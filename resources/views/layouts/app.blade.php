@@ -34,5 +34,6 @@
             <p class="text-muted text-center">&copy; Copyright {{ config('app.name', 'Laravel') }}</p>
         </div>
     </footer>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
