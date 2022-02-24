@@ -61,8 +61,9 @@
                             <div class="mb-3">
                                 <span class="h3 fw-normal text-accent me-1">{{ @number_format($product->retail_price, 0, '', ',') }}<small>đ</small></span>
                             </div>
-                            <form class="mb-grid-gutter" method="post">
+                            <form class="mb-grid-gutter" action="{{ route('cart.add')}}" method="post">
                                 @csrf
+                                <input type="hidden" name="id" value="{{ $product->id }}">
                                 <div class="mb-3 d-flex align-items-center">
                                     <input type="number" class="form-control me-3 text-center input-quantity" name="quantity" min="1" max="{{ $product->quantity }}" value="1">
                                     <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i class="fa fa-cart-plus"></i> {{ __('Add to Cart') }}</button>
