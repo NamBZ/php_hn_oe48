@@ -17,6 +17,7 @@
     "public/bower_components/"
   ],
   "dependencies": {
-    "font-awesome": "Font-Awesome#v4.7.0"
+    "font-awesome": "Font-Awesome#v4.7.0",
+    "adminlte": "admin-lte#^3.2.0"
   }
 }
