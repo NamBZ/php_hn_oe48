@@ -1,5 +1,20 @@
 {
     "Vietnamese": "Tiếng Việt",
     "Empty product": "There is no new product now!",
-    "Whoops! Something went wrong.": "Whoops! Something went wrong."
+    "Whoops! Something went wrong.": "Whoops! Something went wrong.",
+    "You are logged in as admin!": "You are logged in as admin!",
+    "Statistics Page": "Statistics Page",
+    "Comfirm Deleted": "Are you sure want to detele?",
+    "Type": "Type",
+    "Category": "Category",
+    "List Category": "List Category",
+    "New Category": "New Category",
+    "Edit Category": "Edit Category",
+    "Root Category": "Root Category",
+    "Empty Category": "There is no category now...",
+    "Product": "Product",
+    "Order": "Order",
+    "Shipping": "Shipping",
+    "Rating": "Rating",
+    "User Management": "User Management"
 }
