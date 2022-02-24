@@ -34,13 +34,7 @@
                                                 @if ($category->parent_id == 0)
                                                     <span style="color:red;">{{ __('Root Category') }}</span>
                                                 @else
-                                                    @foreach($parent_cate as $key => $sub_cate)
-
-                                                        @if($sub_cate->id==$category->parent_id)
-                                                            <span style="color:green;">{{$sub_cate->name}}</span>
-                                                        @endif
-
-                                                    @endforeach
+                                                    <span style="color:green;">{{$category->parent->name}}</span>  
                                                 @endif
                                             </td>
                                             <td>{{ $category->slug }}</td>
