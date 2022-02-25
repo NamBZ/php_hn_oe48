@@ -68,7 +68,12 @@
 
                 <!-- Cart -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                    <a class="nav-link position-relative" href="{{ route('cart') }}">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        @if (Session::get('cart'))
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ count(Session::get('cart')) }}</span>
+                        @endif
+                    </a>
                 </li>
             </ul>
         </div>

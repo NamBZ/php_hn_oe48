@@ -20,6 +20,7 @@
     <link href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower_components/toastr/toastr.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -35,5 +36,26 @@
         </div>
     </footer>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/toastr/toastr.min.js') }}"></script>
+    <script>
+        $(function(){
+            @if(Session::has('success'))
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+
+            @if(Session::has('info'))
+                toastr.info("{{ Session::get('info') }}");
+            @endif
+
+            @if(Session::has('warning'))
+                toastr.warning("{{ Session::get('warning') }}");
+            @endif
+
+            @if(Session::has('error'))
+                toastr.error("{{ Session::get('error') }}");
+            @endif
+        });
+    </script>
 </body>
 </html>

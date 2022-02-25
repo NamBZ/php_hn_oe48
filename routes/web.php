@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
     ]);
 });
 
-Route::group(['middleware' => ['isUser', 'auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('user', [UserController::class, 'index'])->name('user');
+
+    // Cart
+    Route::get('cart', [CartController::class, 'index'])->name('cart');
+    Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::get('cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
 });
