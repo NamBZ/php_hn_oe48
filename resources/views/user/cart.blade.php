@@ -84,7 +84,7 @@
                     </div>
                     @if (Session::get('cart'))
                         <div class="row">
-                            <a href="" class="btn btn-success text-uppercase col-12 text-decoration-none fw6 text-center">{{ __('Checkout') }}</a>
+                            <a href="{{ route('cart.checkout') }}" class="btn btn-success text-uppercase col-12 text-decoration-none fw6 text-center">{{ __('Checkout') }}</a>
                         </div>
                     @endif
                 </div>
