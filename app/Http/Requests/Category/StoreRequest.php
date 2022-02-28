@@ -25,8 +25,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|unique:categories',
-            'slug' => 'required|min:3|unique:categories',
+            'name' => 'required|min:3|max:191|unique:categories',
+            'slug' => 'required|min:3|max:191|unique:categories',
             'parent_id' => 'exists:categories,id|nullable'
         ];
     }

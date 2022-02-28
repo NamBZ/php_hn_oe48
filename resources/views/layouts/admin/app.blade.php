@@ -23,6 +23,9 @@
     
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('bower_components/adminlte/dist/css/adminlte.min.css') }}">
+
+    <!-- Nofi toast -->
+    <link href="{{ asset('bower_components/toastr/toastr.min.css') }}" rel="stylesheet">
     
 </head>
 <body class="hold-transition sidebar-mini">
@@ -56,5 +59,25 @@
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ asset('bower_components/adminlte/plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('bower_components/toastr/toastr.min.js') }}"></script>
+    <script>
+        $(function(){
+            @if(Session::has('success'))
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+
+            @if(Session::has('info'))
+                toastr.info("{{ Session::get('info') }}");
+            @endif
+
+            @if(Session::has('warning'))
+                toastr.warning("{{ Session::get('warning') }}");
+            @endif
+
+            @if(Session::has('error'))
+                toastr.error("{{ Session::get('error') }}");
+            @endif
+        });
+    </script>
 </body>
 </html>

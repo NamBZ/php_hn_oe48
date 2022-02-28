@@ -20,6 +20,7 @@
     <link href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link href="{{ asset('bower_components/toastr/toastr.min.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -37,6 +38,8 @@
     </footer>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/toastr/toastr.min.js') }}"></script>
     <script>
         $(function(){

@@ -5,10 +5,10 @@
 <section class="content-wrapper">
     <div class="row justify-content-center">
         <div class="col-md-9">
-            @if ($errors->any())
+            @if ($errors->has('name'))
                 <div class="alert alert-danger">
                     <ul>
-                        @foreach ($errors->all() as $error)
+                        @foreach ($errors->get('name') as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>

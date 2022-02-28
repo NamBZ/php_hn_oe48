@@ -5,6 +5,7 @@
     "You are logged in as admin!": "You are logged in as admin!",
     "Statistics Page": "Statistics Page",
     "Comfirm Deleted": "Are you sure want to detele?",
+    "Comfirm Deleted Category": "Are you sure want to delete? The child category will be up to one level",
     "Type": "Type",
     "Category": "Category",
     "List Category": "List Category",
@@ -16,5 +17,8 @@
     "Order": "Order",
     "Shipping": "Shipping",
     "Rating": "Rating",
-    "User Management": "User Management"
+    "User Management": "User Management",
+    "Add category successfuly": "Add category successfuly",
+    "Update category successfuly": "Update category successfuly",
+    "Delete category successfuly": "Delete category successfuly"
 }
