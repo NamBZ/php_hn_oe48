@@ -43,7 +43,7 @@
                                                 <form action="{{ route('admin.categories.destroy', $category->id)}}" method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-danger" type="submit" onclick="return confirm('{{ __('Comfirm Deleted') }}');">{{ __('Delete') }}</button>
+                                                    <button class="btn btn-danger" type="submit" onclick="return confirm('{{ __('Comfirm Deleted Category') }}');">{{ __('Delete') }}</button>
                                                 </form>
                                             </td>
                                         </tr>

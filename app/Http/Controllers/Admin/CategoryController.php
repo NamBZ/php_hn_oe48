@@ -46,7 +46,8 @@ class CategoryController extends Controller
     {
         Category::firstOrCreate($request->validated());
 
-        return Redirect::route('admin.categories.index');
+        return Redirect::route('admin.categories.index')
+            ->with('success', __('Add category successfuly'));
     }
 
     /**
@@ -90,7 +91,8 @@ class CategoryController extends Controller
     
         $category = Category::whereId($id)->update($request->validated());
 
-        return Redirect::route('admin.categories.index');
+        return Redirect::route('admin.categories.index')
+            ->with('success', __('Update category successfuly'));
     }
 
     /**
@@ -104,6 +106,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return Redirect::route('admin.categories.index');
+        return Redirect::route('admin.categories.index')
+            ->with('success', __('Delete category successfuly'));
     }
 }

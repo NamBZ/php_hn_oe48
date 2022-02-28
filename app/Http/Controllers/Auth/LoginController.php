@@ -33,9 +33,9 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (Auth()->user()->role == UserRole::ADMIN) {
-            return route('dashboard');
+            return route('dashboard')->with('success', __('Login successfuly'));
         } elseif (Auth()->user()->role == UserRole::USER) {
-            return route('home');
+            return route('home')->with('success', __('Login successfuly'));
         }
     }
 
@@ -59,9 +59,9 @@ class LoginController extends Controller
 
         if (auth()->attempt(['email' => $input['email'], 'password' => $input['password']])) {
             if ((auth()->user()->role == UserRole::ADMIN)) {
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard')->with('success', __('Login successfuly'));
             } elseif (auth()->user()->role == UserRole::USER) {
-                return redirect()->route('home');
+                return redirect()->route('home')->with('success', __('Login successfuly'));
             }
         } else {
             return redirect()->route('login')->with('error', __('Input are wrong'));
