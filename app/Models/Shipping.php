@@ -9,6 +9,19 @@ class Shipping extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'order_id',
+        'name',
+        'address',
+        'phone',
+        'note',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
