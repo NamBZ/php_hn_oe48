@@ -41,6 +41,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
         'update' => 'admin.categories.update',
         'destroy' => 'admin.categories.destroy',
     ]);
+    Route::resource('products', Admin\ProductController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'admin.products.index',
+            'create' => 'admin.products.create',
+            'store' => 'admin.products.store',
+            'edit' => 'admin.products.edit',
+            'update' => 'admin.products.update',
+            'destroy' => 'admin.products.destroy',
+        ]);
 });
 
 Route::group(['middleware' => ['auth']], function () {
