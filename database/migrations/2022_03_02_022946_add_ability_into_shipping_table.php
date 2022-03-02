@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAbilityIntoCategoriesTable extends Migration
+class AddAbilityIntoShippingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddAbilityIntoCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign(['parent_id']);
-            $table->foreign('parent_id')->references('id')->on('categories')->cascadeOnUpdate()->nullOnDelete()->change();
+        Schema::table('shippings', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('order_id');
+        });
+
+        Schema::table('shippings', function (Blueprint $table) {
+            $table->foreignId('order_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

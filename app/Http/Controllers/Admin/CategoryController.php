@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
+use App\Models\Product;
 use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
@@ -104,6 +105,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+        $defaultCate = $category->first()->id;
+        Product::whereCategoryId($id)->update(['category_id' => $defaultCate]);
+        if ($category->id == $defaultCate) {
+            return Redirect::route('admin.categories.index')
+                ->with('info', __('This category cannot be delete because needed'));
+        }
         $category->delete();
 
         return Redirect::route('admin.categories.index')
