@@ -104,9 +104,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $slug = Str::slug($request->title);
-        $dirImages = "images/uploads/products";
+        $dirImages = "images/uploads/products/";
         if ($request->hasfile('image')) {
-            $destination = $dirImages . $product->image;
+            $imageName = explode("/", $product->image);
+            $destination = $dirImages . end($imageName);
             if (File::exists($destination)) {
                 File::delete($destination);
             }
@@ -114,7 +115,7 @@ class ProductController extends Controller
             $extension = $file->getClientOriginalExtension();
             $newImage = time() . '-' . rand(0, 255) . '-' .  $request->title . '.' . $extension;
             $file->move($dirImages, $newImage);
-            $imageLink = asset($dirImages . '/' . $newImage);
+            $imageLink = asset($dirImages . $newImage);
         } else {
             $imageLink = $request->imageExist;
         }
