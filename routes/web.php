@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,6 +52,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
             'update' => 'admin.products.update',
             'destroy' => 'admin.products.destroy',
         ]);
+    Route::get('order-manager', [Admin\OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('order-manager/view-order/{id}', [Admin\OrderController::class, 'viewOrder'])
+        ->name('admin.orders.viewOrder');
+    Route::post('order-manager/view-order/{id}', [Admin\OrderController::class, 'update'])
+        ->name('admin.orders.update');
 });
 
 Route::group(['middleware' => ['auth']], function () {

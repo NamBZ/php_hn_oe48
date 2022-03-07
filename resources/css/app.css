@@ -233,3 +233,13 @@ img {
     padding: 40px 20px;
     font-size: 16px
 }
+
+/* admin dashboard */
+.style-image {
+    height: 100px;
+    width: 100px;
+}
+
+.btn-action {
+    width: 100px;
+}

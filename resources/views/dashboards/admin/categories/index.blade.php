@@ -17,11 +17,11 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px">#</th>
+                                    <th>#</th>
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Type') }}</th>
                                     <th>{{ __('Slug') }}</th>
-                                    <th colspan="2" style="width: 100px;">{{ __('Action') }}</th>
+                                    <th colspan="2" class="btn-action">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,9 +32,9 @@
                                             <td>{{ $category->name }}</td>
                                             <td>
                                                 @if ($category->parent_id == 0)
-                                                    <span style="color:red;">{{ __('Root Category') }}</span>
+                                                    <span class="text-danger">{{ __('Root Category') }}</span>
                                                 @else
-                                                    <span style="color:green;">{{$category->parent->name}}</span>  
+                                                    <span class="text-success">{{$category->parent->name}}</span>  
                                                 @endif
                                             </td>
                                             <td>{{ $category->slug }}</td>
