@@ -17,31 +17,14 @@
                         </div>
                     </div>
                     <!-- Product details-->
-                    <div class="col-lg-5 pt-4 pt-lg-0">
+                    <div class="col-lg-5 pt-4">
                         <div class="product-details ms-auto pb-3">
                             <!-- Product category-->
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb breadcrumb-light justify-content-center justify-content-lg-start">
-                                    <li class="breadcrumb-item">
-                                        <a class="text-decoration-none text-nowrap" href="{{ route('home') }}"><i class="fa fa-home"></i>{{ __('Home') }}</a>
-                                    </li>
-                                    @php
-                                        $cate = $product->category;
-                                        $list_cate = '<li class="breadcrumb-item text-nowrap"><a class="text-decoration-none text-nowrap" href="' . route('categories.show', $cate->slug) . '">' . $cate->name . '</a></li>';
-                                    @endphp
-                                    @while(!$cate->isParent())
-                                        @php
-                                            $cate = $cate->parent;
-                                            $list_cate = '<li class="breadcrumb-item text-nowrap"><a class="text-decoration-none text-nowrap" href="' . route('categories.show', $cate->slug) . '">' . $cate->name . '</a></li>' . $list_cate;
-                                        @endphp
-                                    @endwhile
-                                    {!! $list_cate !!}
-                                </ol>
-                            </nav>
+                            <a class="text-decoration-none text-black" href="{{ route('categories.show', $product->category->slug) }}">{{ $product->category->name }}</a>
                             <!-- Product title-->
-                            <h3 class="product-title">
+                            <h2 class="product-title text-primary">
                                 {{ $product->title }}
-                            </h3>
+                            </h2>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <a class="text-decoration-none" href="#reviews" data-scroll="">
                                     <span class="star-rating text-warning">
@@ -59,37 +42,32 @@
                                 </a>
                             </div>
                             <div class="mb-3">
-                                <span class="h3 fw-normal text-accent me-1">{{ @number_format($product->retail_price, 0, '', ',') }}<small>đ</small></span>
+                                <span class="h3 fw-normal text-accent me-1 text-danger">{{ @number_format($product->retail_price, 0, '', ',') }}<small>đ</small></span>
                             </div>
                             <form class="mb-grid-gutter" action="{{ route('cart.add')}}" method="post">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $product->id }}">
                                 <div class="mb-3 d-flex align-items-center">
                                     <input type="number" class="form-control me-3 text-center input-quantity" name="quantity" min="1" max="{{ $product->quantity }}" value="1">
-                                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i class="fa fa-cart-plus"></i> {{ __('Add to Cart') }}</button>
+                                    <button class="btn btn-success btn-shadow d-block w-100" type="submit"><i class="fa fa-cart-plus"></i> {{ __('Add to Cart') }}</button>
                                 </div>
                             </form>
                             <!-- Product panels-->
                             <div class="accordion mb-4" id="productPanels">
                                 <div class="accordion-item">
-                                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#productInfo" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="productInfo"><i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>{{ __('Description') }}</a></h3>
+                                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#productInfo" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="productInfo"><i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>{{ __('Short Descriptions') }}</a></h3>
                                     <div class="accordion-collapse collapse" id="productInfo" data-bs-parent="#productPanels" style="">
                                         <div class="accordion-body">
                                             {!! $product->description !!}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#productShare" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="productShare"><i class="ci-delivery text-muted lead align-middle mt-n1 me-2"></i>{{ __('Share')}}</a></h3>
-                                    <div class="accordion-collapse collapse" id="productShare" data-bs-parent="#productPanels" style="">
-                                        <div class="accordion-body fs-sm">
-                                            <!-- Sharing-->
-                                            <a class="btn-share btn-twitter me-2 my-2" href="https://twitter.com/intent/tweet/?text={{ $product->title }}&url={{ route('products.show', $product->slug) }}&via=Crunchify"><i class="fa fa-twitter"></i> Twitter</a>
-                                            <a class="btn-share btn-instagram me-2 my-2" href="https://www.instagram.com/?url={{ route('products.show', $product->slug) }}"><i class="fa fa-instagram"></i> Instagram</a>
-                                            <a class="btn-share btn-facebook my-2" href="https://www.facebook.com/sharer/sharer.php?u={{ route('products.show', $product->slug) }}"><i class="fa fa-facebook"></i> Facebook</a>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="pt-2 text-center">
+                                <!-- Sharing-->
+                                <a class="btn-share btn-twitter me-2 my-2 text-decoration-none" href="https://twitter.com/intent/tweet/?text={{ $product->title }}&url={{ route('products.show', $product->slug) }}&via=Crunchify"><i class="fa fa-twitter"></i> Twitter</a>
+                                <a class="btn-share btn-instagram me-2 my-2 text-decoration-none" href="https://www.instagram.com/?url={{ route('products.show', $product->slug) }}"><i class="fa fa-instagram"></i> Instagram</a>
+                                <a class="btn-share btn-facebook my-2 text-decoration-none" href="https://www.facebook.com/sharer/sharer.php?u={{ route('products.show', $product->slug) }}"><i class="fa fa-facebook"></i> Facebook</a>
                             </div>
                         </div>
                     </div>
@@ -99,7 +77,7 @@
         <!-- Content -->
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <h2 class="h3 pb-2">{{ __('Description') }}</h2>
+                <h2 class="h3 pb-2">{{ __('Content') }}</h2>
                 {!! $product->content !!}
             </div>
         </div>

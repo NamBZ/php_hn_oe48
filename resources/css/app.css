@@ -243,3 +243,13 @@ img {
 .btn-action {
     width: 100px;
 }
+
+.cart-item-list .product-details-content .item-title a {
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}

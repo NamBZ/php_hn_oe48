@@ -45,7 +45,10 @@
                         </div>
                     </div>
                 @endforeach
-                {{ $list_products->links() }}
+                {{-- Pagination --}}
+                <div class="d-flex justify-content-center">
+                    {{ $list_products->links() }}
+                </div>
             @else
                 <div class="alert alert-primary" role="alert">{{ __('Empty product') }}</div>
             @endif
