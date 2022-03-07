@@ -30,6 +30,9 @@
     <!-- Nofi toast -->
     <link href="{{ asset('bower_components/toastr/toastr.min.css') }}" rel="stylesheet">
     
+    <!-- Style -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

@@ -26,14 +26,14 @@
                                     <th class="col-md-1">{{ __('Retail Price') }}</th>
                                     <th class="col-md-1">{{ __('Original Price') }}</th>
                                     <th class="col-md-1">{{ __('Average Rate') }}</th>
-                                    <th colspan="2" style="width: 100px;">{{ __('Action') }}</th>
+                                    <th colspan="2" class="btn-action">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if ($products->isNotEmpty())
                                     @foreach ($products as $key => $product)
                                         <tr>
-                                            <td><img style="width: 100px; height: 100px;" src="{{ $product->image }}" alt=""></td>
+                                            <td><img class="style-image" src="{{ $product->image }}" alt=""></td>
                                             <td>{{ $product->title }}</td>
                                             <td>{{ $product->category->name }}</td>
                                             <td>{{ $product->slug }}</td>
