@@ -9,8 +9,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Search -->
-            <form class="w-100 p-2 me-3" style="max-width: 500px;">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <form class="w-100 p-2 me-3 input-group" action="{{ route('search') }}" method="get" style="max-width: 500px;">
+                <input type="search" name="query" class="form-control" value="{{ request()->query('query') }}" placeholder="Search..." aria-label="Search">
             </form>
 
             <!-- Right Side Of Navbar -->
