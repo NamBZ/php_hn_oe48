@@ -29,7 +29,7 @@
                                         </a>
                                         <div class="product-details-content col-5 pr0">
                                             <div class="row item-title no-margin">
-                                                <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->title }}" class="unset col-12 no-padding text-decoration-none">
+                                                <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->title }}" class="unset col-12 no-padding text-decoration-none text-primary">
                                                     <span class="fs20 fw6 link-color">{{ $product->title }}</span>
                                                 </a>
                                             </div>
@@ -40,7 +40,7 @@
                                             </div>
                                             <div class="no-padding col-12 cursor-pointer fs16">
                                                 <div class="d-inline-block">
-                                                    <a href="{{ route('cart.delete', $product->id) }}" class="unset text-decoration-none" onclick="confirm('{{ __('Are you want to delete this item?') }}')">
+                                                    <a href="{{ route('cart.delete', $product->id) }}" class="unset text-decoration-none btn btn-danger" onclick="confirm('{{ __('Are you want to delete this item?') }}')">
                                                         <span class="fa fa-trash-o"></span>
                                                         <span class="align-vertical-super">{{ __('Remove') }}</span>
                                                     </a>
@@ -54,12 +54,12 @@
                                             </div>
                                         </div>
                                         <div class="product-price fs18 col-2">
-                                            <span class="card-current-price fw6 mr10 text-warning"> {{ number_format($product->retail_price * $product->selected_quantity) }}<small>đ</small> </span>
+                                            <span class="card-current-price fw6 mr10 text-danger"> {{ number_format($product->retail_price * $product->selected_quantity) }}<small>đ</small> </span>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-                            <a href="{{ route('home') }}" class="col-12 link-color text-decoration-none fs16 no-padding"> {{ __('Continue Shopping') }} </a>
+                            <a href="{{ route('home') }}" class="btn btn-success float-start"> {{ __('Continue Shopping') }} </a>
                             <button type="submit" class="btn btn-primary float-end"> {{ __('Update Cart') }} </button>
                         </form>
                     @else

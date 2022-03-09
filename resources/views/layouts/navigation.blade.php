@@ -17,15 +17,23 @@
             <ul class="navbar-nav ms-auto">
                 <!-- Language -->
                 @if (Route::has('language'))
-                    @if (App::isLocale('vi'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('language', ['en']) }}"> {{ __('English') }}</a>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('language', ['vi']) }}"> {{ __('Vietnamese') }}</a>
-                        </li>
-                    @endif
+                    <li class="nav-item dropdown">
+                        <a id="languageDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            @if (App::isLocale('vi'))
+                                {{ __('Vietnamese') }}
+                            @else
+                                {{ __('English') }}
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('language', ['en']) }}"> {{ __('English') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('language', ['vi']) }}"> {{ __('Vietnamese') }}</a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
 
                 <!-- Authentication Links -->
