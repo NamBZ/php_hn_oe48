@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -34,9 +35,13 @@ class LoginController extends Controller
     {
         if (Auth()->user()->role == UserRole::ADMIN) {
             return route('dashboard')->with('success', __('Login successfuly'));
-        } elseif (Auth()->user()->role == UserRole::USER) {
-            return route('home')->with('success', __('Login successfuly'));
         }
+
+        if (Auth()->user()->status == UserSatus::BAN) {
+            return route('home')->with('error', __('Your account is banned by admin'));
+        }
+
+        return route('home')->with('success', __('Login successfuly'));
     }
 
     /**

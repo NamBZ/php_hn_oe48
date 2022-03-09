@@ -58,7 +58,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
             'edit' => 'admin.products.edit',
             'update' => 'admin.products.update',
             'destroy' => 'admin.products.destroy',
-        ]);
+    ]);
+    Route::resource('users', Admin\UserController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'admin.users.index',
+            'create' => 'admin.users.create',
+            'store' => 'admin.users.store',
+            'edit' => 'admin.users.edit',
+            'update' => 'admin.users.update',
+            'destroy' => 'admin.users.destroy',
+    ]);
+    Route::patch('user/{id}/block', [Admin\UserController::class, 'blockUser'])
+        ->name('admin.users.block');
+    Route::patch('user/{id}/unblock', [Admin\UserController::class, 'unblockUser'])
+        ->name('admin.users.unblock');
     Route::get('order-manager', [Admin\OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('order-manager/view-order/{id}', [Admin\OrderController::class, 'viewOrder'])
         ->name('admin.orders.viewOrder');

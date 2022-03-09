@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role == UserRole::USER) {
+        if (Auth::check() && Auth::user()->role == UserRole::USER && Auth::user()->status == UserStatus::ACTIVE) {
             return $next($request);
         }
            
