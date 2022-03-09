@@ -7,7 +7,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -74,4 +76,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
     Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('cart/order', [CartController::class, 'order'])->name('cart.order');
+
+    // Profile
+    Route::get('profile', [ProfileController::class, 'editProfile'])->name('profile');
+    Route::patch('profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::get('profile/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
+    Route::put('profile/change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
