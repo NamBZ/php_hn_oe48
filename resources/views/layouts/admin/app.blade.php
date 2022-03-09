@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- CKEditor -->
     <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
 
@@ -29,9 +26,6 @@
 
     <!-- Nofi toast -->
     <link href="{{ asset('bower_components/toastr/toastr.min.css') }}" rel="stylesheet">
-    
-    <!-- Style -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     
 </head>
 <body class="hold-transition sidebar-mini">
@@ -61,7 +55,7 @@
 <!-- Bootstrap -->
 <script src="{{ asset('bower_components/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE -->
-<script src="{{ asset('bower_components/adminlte/dist/js/adminlte.js') }}"></script>
+<script src="{{ asset('bower_components/adminlte/dist/js/adminlte.min.js') }}"></script>
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ asset('bower_components/adminlte/plugins/chart.js/Chart.min.js') }}"></script>
