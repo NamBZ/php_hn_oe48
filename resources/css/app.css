@@ -38,8 +38,13 @@ img {
     background-color: #fff
 }
 
+.list-books .properties .properties-card .properties-img {
+    text-align: center;
+}
+
 .list-books .properties .properties-card .properties-img img {
-    width: 100%
+    width: auto;
+    height: 300px;
 }
 
 .list-books .properties .properties-card .properties-caption {
@@ -68,7 +73,7 @@ img {
     display: -webkit-box;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
 }
 
 .list-books .properties .properties-card .properties-caption.properties-caption2 {
@@ -77,7 +82,7 @@ img {
 }
 
 .list-books .properties .properties-card .properties-caption h3 a {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
     margin-bottom: 6px;
     color: #1a1a1a;
@@ -86,7 +91,7 @@ img {
 
 @media only screen and (min-width: 992px) and (max-width:1199px) {
     .list-books .properties .properties-card .properties-caption h3 a {
-        font-size:16px
+        font-size:14px
     }
 }
 
@@ -252,4 +257,25 @@ img {
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+}
+
+.list-category nav {
+    font-size: .875rem;
+}
+
+.list-category nav ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.list-category nav ul ul {
+    padding-left: 1rem;
+}
+
+.list-category nav a {
+    color: inherit;
+}
+
+.list-category nav a:not(:hover) {
+    text-decoration: none;
 }

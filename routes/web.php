@@ -37,7 +37,9 @@ Route::get('categories/{slug}.html', [CategoryController::class, 'show'])->name(
 
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
-    Route::resource('categories', Admin\CategoryController::class)->names([
+    Route::resource('categories', Admin\CategoryController::class)
+        ->except(['show'])
+        ->names([
         'index' => 'admin.categories.index',
         'create' => 'admin.categories.create',
         'store' => 'admin.categories.store',
