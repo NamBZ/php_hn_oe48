@@ -66,21 +66,21 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label for="name" class="form-label">{{ __('Name') }}</label> <span class="text-danger">*</span>
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $user->name }}" required>
                                         @error('name')
                                             <div class="form-text invalid-feedback" role="alert">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="address" class="form-label">{{ __('Address') }}</label> <span class="text-danger">*</span>
-                                        <textarea id="address" class="form-control @error('address') is-invalid @enderror" name="address" required>{{ old('address') }}</textarea>
+                                        <textarea id="address" class="form-control @error('address') is-invalid @enderror" name="address" required>{{ old('address') ?? $user->address}}</textarea>
                                         @error('address')
                                             <div class="form-text invalid-feedback" role="alert">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">{{ __('Phone number') }}</label> <span class="text-danger">*</span>
-                                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required>
+                                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? $user->phone}}" required>
                                         @error('phone')
                                             <div class="form-text invalid-feedback" role="alert">{{ $message }}</div>
                                         @enderror

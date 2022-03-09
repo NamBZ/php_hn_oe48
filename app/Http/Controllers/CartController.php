@@ -109,12 +109,13 @@ class CartController extends Controller
 
     public function checkout()
     {
+        $user = Auth::user();
         if (!session()->has('cart')) {
             return redirect()->route('cart')
                 ->with('error', __('Please add items to your cart'));
         }
 
-        return view('user.checkout');
+        return view('user.checkout', compact('user'));
     }
 
     public function order(StoreRequest $request)
