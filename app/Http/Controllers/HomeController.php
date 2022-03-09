@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -16,8 +17,10 @@ class HomeController extends Controller
     {
         $list_products = Product::orderBy('created_at', 'DESC')
             ->paginate(config('pagination.per_page'));
+        $categories = Category::whereNull('parent_id')->with('children')->get();
 
         return view('home', [
+            'categories' => $categories,
             'list_products' => $list_products,
         ]);
     }
