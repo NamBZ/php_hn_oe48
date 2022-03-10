@@ -129,7 +129,7 @@
                 <hr class="mt-4 mb-3">
                 <div class="row pt-4">
                     <!-- Reviews list-->
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <!-- Review-->
                         @if ($ratings->isNotEmpty())
                             @foreach ($ratings as $rating)
@@ -168,40 +168,6 @@
 
                         <div class="text-center">
                             {{ $ratings->links() }}
-                        </div>
-                    </div>
-                    <!-- Leave review form-->
-                    <div class="col-md-5 mt-2 pt-4 mt-md-0 pt-md-0">
-                        <div class="bg-white shadow-lg p-3 rounded-3">
-                            <h3 class="h4 pb-2">{{ __('Write a review') }}</h3>
-                            <form class="needs-validation" method="post">
-                                <div class="mb-3">
-                                    <label class="form-label" for="rate">{{ __('Rating') }}<span class="text-danger">*</span></label>
-                                    <div class="px-4">
-                                        @foreach (range(5, 1) as $rate)
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="rate"{{ $rate == 5 ? 'checked' : '' }} value="{{ $rate }}" id="review-rating-{{ $rate }}">
-                                                <label class="form-check-label text-warning" for="review-rating-{{ $rate }}">
-                                                    @foreach (range(1, 5) as $star)
-                                                        @if ($rate >= $star)
-                                                            <i class="fa fa-star"></i>
-                                                        @elseif ($rate == $rate + 0.5)
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        @else
-                                                            <i class="fa fa-star-o"></i>
-                                                        @endif
-                                                    @endforeach
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="comment">{{ __('Comment') }}<span class="text-danger">*</span></label>
-                                    <textarea class="form-control" rows="4" required="" value="comment" id="comment"></textarea>
-                                </div>
-                                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">{{ __('Submit a Rating') }}</button>
-                            </form>
                         </div>
                     </div>
                 </div>

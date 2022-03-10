@@ -15,8 +15,7 @@
                 <div class="list-group list-group-flush">
                     <a href="{{ route('profile') }}" class="list-group-item list-group-item-action">{{ __('My Account') }}</a>
                     <a href="{{ route('user.purchase') }}" class="list-group-item list-group-item-action">{{ __('History Order') }}</a>
-                    <a href="#" class="list-group-item list-group-item-action">{{ __('My Review') }}</a>
-                    <a href="#" class="list-group-item list-group-item-action">{{ __('My Wishlist') }}</a>
+                    <a href="{{ route('user.rating') }}" class="list-group-item list-group-item-action">{{ __('My Review') }}</a>
                 </div>
             </div>
         </div>

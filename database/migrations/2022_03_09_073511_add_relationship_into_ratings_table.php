@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAddressIntoUsersTable extends Migration
+class AddRelationshipIntoRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddAddressIntoUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->nullable();
+        Schema::table('ratings', function (Blueprint $table) {
+            $table->foreignId('order_item_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -25,10 +25,8 @@ class AddAddressIntoUsersTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('users', 'address')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn(['address']);
-            });
-        }
+        Schema::table('ratings', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('order_item_id');
+        });
     }
 }

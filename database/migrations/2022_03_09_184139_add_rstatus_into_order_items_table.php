@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAddressIntoUsersTable extends Migration
+class AddRstatusIntoOrderItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddAddressIntoUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->nullable();
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->boolean('rstatus')->default(false);
         });
     }
 
@@ -25,9 +25,9 @@ class AddAddressIntoUsersTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('users', 'address')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn(['address']);
+        if (Schema::hasColumn('order_items', 'rstatus')) {
+            Schema::table('order_items', function (Blueprint $table) {
+                $table->dropColumn(['rstatus']);
             });
         }
     }
