@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,13 +43,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
     Route::resource('categories', Admin\CategoryController::class)
         ->except(['show'])
         ->names([
-        'index' => 'admin.categories.index',
-        'create' => 'admin.categories.create',
-        'store' => 'admin.categories.store',
-        'edit' => 'admin.categories.edit',
-        'update' => 'admin.categories.update',
-        'destroy' => 'admin.categories.destroy',
-    ]);
+            'index' => 'admin.categories.index',
+            'create' => 'admin.categories.create',
+            'store' => 'admin.categories.store',
+            'edit' => 'admin.categories.edit',
+            'update' => 'admin.categories.update',
+            'destroy' => 'admin.categories.destroy',
+        ]);
     Route::resource('products', Admin\ProductController::class)
         ->except(['show'])
         ->names([
@@ -58,7 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
             'edit' => 'admin.products.edit',
             'update' => 'admin.products.update',
             'destroy' => 'admin.products.destroy',
-    ]);
+        ]);
     Route::resource('users', Admin\UserController::class)
         ->except(['show'])
         ->names([
@@ -68,7 +69,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
             'edit' => 'admin.users.edit',
             'update' => 'admin.users.update',
             'destroy' => 'admin.users.destroy',
-    ]);
+        ]);
     Route::patch('user/{id}/block', [Admin\UserController::class, 'blockUser'])
         ->name('admin.users.block');
     Route::patch('user/{id}/unblock', [Admin\UserController::class, 'unblockUser'])
@@ -100,4 +101,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('user/purchase', [UserController::class, 'purchase'])->name('user.purchase');
     Route::get('user/order/{id}', [UserController::class, 'orderDetail'])->name('user.purchase.details');
     Route::post('user/order/{id}/cancel', [UserController::class, 'orderCancel'])->name('user.purchase.cancel');
+    //Rating
+    Route::get('user/rating', [RatingController::class, 'index'])->name('user.rating');
+    Route::get('user/rating/{order_id}', [RatingController::class, 'showAllOrder'])->name('user.rating.view');
+    Route::post('user/rating/{order_items_id}', [RatingController::class, 'addRating'])->name('user.rating.send');
 });

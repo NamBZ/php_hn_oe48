@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RatingFactory extends Factory
@@ -17,10 +18,11 @@ class RatingFactory extends Factory
     public function definition()
     {
         $orderId = Order::all()->random()->id;
-
+        $orderItem = OrderItem::find($orderId);
         return [
             'order_id' => $orderId,
-            'product_id' => OrderItem::find($orderId)->product_id,
+            'product_id' => $orderItem->product_id,
+            'order_item_id' => $orderItem,
             'rate' => $this->faker->numberBetween(3,5),
             'comment' => $this->faker->sentence(),
             'created_at' => now(),
