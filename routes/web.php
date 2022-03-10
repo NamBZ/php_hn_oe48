@@ -81,8 +81,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('user', [UserController::class, 'index'])->name('user');
-
     // Cart
     Route::get('cart', [CartController::class, 'index'])->name('cart');
     Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -96,4 +94,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::get('profile/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
     Route::put('profile/change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
+
+    // User
+    Route::get('user', [UserController::class, 'index'])->name('user');
+    Route::get('user/purchase', [UserController::class, 'purchase'])->name('user.purchase');
+    Route::get('user/order/{id}', [UserController::class, 'orderDetail'])->name('user.purchase.details');
+    Route::post('user/order/{id}/cancel', [UserController::class, 'orderCancel'])->name('user.purchase.cancel');
 });

@@ -55,27 +55,21 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <label class="labels">{{ __('Email') }}</label>
                 <p class="mt-2 text-secondary">
                     <i class="fa fa-envelope-o mr-1" aria-hidden="true"></i>
                     {{ $user->email }}
                 </p>
             </div>
-            <div class="col-md-3">
-                <a href="" class="btn btn-outline-primary profile-button mt-4">{{ __('Change') }}</a>
-            </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <label class="labels">{{ __('Phone') }}</label>
                 <p class="mt-2 text-secondary">
                     <i class="fa fa-phone mr-1" aria-hidden="true"></i>
                     {{ $user->phone }}
                 </p>
-            </div>
-            <div class="col-md-3">
-                <a href="" class="btn btn-outline-primary profile-button mt-4">{{ __('Change') }}</a>
             </div>
         </div>
         <div class="row mt-3">

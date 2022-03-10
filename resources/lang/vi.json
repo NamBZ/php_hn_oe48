@@ -878,5 +878,20 @@
     "Input are wrong": "Đầu vào sai",
     "Registed successfully": "Đăng ký thành công",
     "Failed to register": "Đăng ký thất bại",
-    "Empty": "Trống rỗng"
+    "Empty": "Trống rỗng",
+    "My Account": "Tài khoản của tôi",
+    "History Order": "Lịch sử đặt hàng",
+    "My Review": "Đánh giá của tôi",
+    "My Wishlist": "Sản phẩm ưu thích",
+    "Profile Info": "Thông tin cá nhân",
+    "Save Change": "Lưu thay đổi",
+    "Security Settings": "Cài đặt bảo mật",
+    "Change Password": "Đổi mật khẩu",
+    "Change": "Đổi",
+    "Update password successfully": "Cập nhật mật khẩu thành công",
+    "My Purchase": "Đơn mua",
+    "Date": "Ngày",
+    "Order Details": "Chi tiết đơn hàng",
+    "Order is canceled": "Đơn hàng đã được hủy",
+    "Failed to cancel this order": "Lỗi xảy ra khi hủy đơn hàng"
 }
