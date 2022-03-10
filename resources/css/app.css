@@ -44,7 +44,7 @@ img {
 
 .list-books .properties .properties-card .properties-img img {
     width: auto;
-    height: 300px;
+    height: 200px;
 }
 
 .list-books .properties .properties-card .properties-caption {
@@ -60,6 +60,7 @@ img {
     word-wrap: break-word;
     white-space: normal;
     overflow: hidden;
+    min-height: 4.25rem;
     display: -webkit-box;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
@@ -76,9 +77,8 @@ img {
     -webkit-line-clamp: 1;
 }
 
-.list-books .properties .properties-card .properties-caption.properties-caption2 {
+.list-books .properties .properties-card {
     border: 1px solid #eee1e0;
-    border-top: 0
 }
 
 .list-books .properties .properties-card .properties-caption h3 a {
@@ -149,7 +149,7 @@ img {
     font-size: 20px
 }
 
-.list-books .properties:hover .properties-caption {
+.list-books .properties:hover .properties-card {
     box-shadow: 0 15px 30px rgba(255,22,22,.1)
 }
 
@@ -161,6 +161,10 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.product-gallery img{
+    max-height: 400px;
 }
 
 .input-quantity {

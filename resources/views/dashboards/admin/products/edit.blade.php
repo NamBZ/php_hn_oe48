@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label for="image">{{ __('Image') }}</label>
-                            <img  class="style-image" src="{{ $product->image }}">
+                            <img  class="profile-user-img" src="{{ $product->image }}">
                             <input type="file" id="image" name="image" class="form-control">
                             <input type="hidden" id="image" name="imageExist" value="{{ $product->image }}" class="form-control">
                             @error('image')

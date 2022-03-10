@@ -33,7 +33,7 @@
                                 @if ($products->isNotEmpty())
                                     @foreach ($products as $key => $product)
                                         <tr>
-                                            <td><img class="style-image" src="{{ $product->image }}" alt=""></td>
+                                            <td><img class="profile-user-img" src="{{ $product->image }}" alt=""></td>
                                             <td>{{ $product->title }}</td>
                                             <td>{{ $product->category->name }}</td>
                                             <td>{{ $product->slug }}</td>

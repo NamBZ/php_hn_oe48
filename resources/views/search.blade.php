@@ -27,7 +27,7 @@
                                                 @foreach (range(1,5) as $rate)
                                                     @if ($product->avg_rate >= $rate)
                                                         <i class="fa fa-star"></i>
-                                                    @elseif ($product->avg_rate == $rate + 0.5)
+                                                    @elseif ($product->avg_rate == $rate - 0.5)
                                                         <i class="fa fa-star-half-o"></i>
                                                     @else
                                                         <i class="fa fa-star-o"></i>
