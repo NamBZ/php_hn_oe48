@@ -37,7 +37,7 @@
                                             <td>{{ $user->id }}</td>
                                             <td class="text-center">
                                                 @if (!empty($user->avatar))
-                                                    <img class="style-image rounded-circle" width="50" src="{{ $user->avatar }}" alt="{{ $user->name }}">
+                                                    <img class="profile-user-img rounded-circle" width="50" src="{{ $user->avatar }}" alt="{{ $user->name }}">
                                                 @else
                                                     <i class="fas fa-user"></i>
                                                 @endif

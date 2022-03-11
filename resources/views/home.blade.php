@@ -25,15 +25,6 @@
                                                     @foreach ($category->children as $child_cate)
                                                             <li class="nav-item">
                                                                 <a class="nav-link" href="{{ route('categories.show', $child_cate->slug) }}">{{ $child_cate->name }}</a>
-                                                                @if ($child_cate->children->isNotEmpty())
-                                                                    <ul class="nav flex-column">
-                                                                    @foreach ($child_cate->children as $sub_cate)
-                                                                            <li class="nav-item">
-                                                                                <a class="nav-link" href="{{ route('categories.show', $sub_cate->slug) }}">{{ $sub_cate->name }}</a>
-                                                                            </li>
-                                                                    @endforeach
-                                                                    </ul>
-                                                                @endif
                                                             </li>
                                                     @endforeach
                                                     </ul>
@@ -49,7 +40,7 @@
                 <div class="col-md-9 row">
                     @if ($list_products->isNotEmpty())
                         @foreach ($list_products as $product)
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 pb-4">
+                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 pb-4">
                                 <div class="properties pb-30">
                                     <div class="properties-card">
                                         <div class="properties-img">
@@ -64,7 +55,7 @@
                                                         @foreach (range(1,5) as $rate)
                                                             @if ($product->avg_rate >= $rate)
                                                                 <i class="fa fa-star"></i>
-                                                            @elseif ($product->avg_rate == $rate + 0.5)
+                                                            @elseif ($product->avg_rate == $rate - 0.5)
                                                                 <i class="fa fa-star-half-o"></i>
                                                             @else
                                                                 <i class="fa fa-star-o"></i>

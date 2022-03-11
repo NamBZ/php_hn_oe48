@@ -112,7 +112,7 @@
                                     @foreach ($orderDetails as $key => $order)
                                         <tr>
                                             <td>{{ ++$key }}</td>
-                                            <td><img class="style-image" src="{{ $order->product->image }}" alt=""></td>
+                                            <td><img class="profile-user-img" src="{{ $order->product->image }}" alt=""></td>
                                             <td>{{ $order->product->title }}</td>
                                             <td>{{ $order->quantity }}</td>
                                             <td>{{ @number_format($order->product->original_price, 0, '', ',') }} đ</td>

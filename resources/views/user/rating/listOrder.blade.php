@@ -15,7 +15,7 @@
                     <div>
                         <div class="row align-items-center justify-content-between">
                             <div class="col-md-3">
-                                <img class="style-image" src="{{ $order->product->image }}" alt="">
+                                <img class="profile-user-img" src="{{ $order->product->image }}" alt="">
                             </div>
                             <div class="col-md-5">
                                 <a href="{{ route('products.show', $order->product->slug) }}" title="{{ $order->product->title }}">{{ $order->product->title }}</a>
@@ -42,7 +42,7 @@
                                                             @foreach (range(1, 5) as $star)
                                                                 @if ($rate >= $star)
                                                                     <i class="fa fa-star"></i>
-                                                                @elseif ($rate == $rate + 0.5)
+                                                                @elseif ($rate == $rate - 0.5)
                                                                     <i class="fa fa-star-half-o"></i>
                                                                 @else
                                                                     <i class="fa fa-star-o"></i>
@@ -74,7 +74,7 @@
                                             @foreach (range(1, 5) as $rate)
                                                 @if ($order->rating->rate >= $rate)
                                                     <i class="fa fa-star"></i>
-                                                @elseif ($order->rating->rate == $rate + 0.5)
+                                                @elseif ($order->rating->rate == $rate - 0.5)
                                                     <i class="fa fa-star-half-o"></i>
                                                 @else
                                                     <i class="fa fa-star-o"></i>

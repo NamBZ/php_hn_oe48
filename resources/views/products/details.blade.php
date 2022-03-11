@@ -31,7 +31,7 @@
                                         @foreach (range(1, 5) as $rate)
                                             @if ($product->avg_rate >= $rate)
                                                 <i class="fa fa-star"></i>
-                                            @elseif ($product->avg_rate == $rate + 0.5)
+                                            @elseif ($product->avg_rate == $rate - 0.5)
                                                 <i class="fa fa-star-half-o"></i>
                                             @else
                                                 <i class="fa fa-star-o"></i>
@@ -84,23 +84,23 @@
         <hr class="mb-5">
 
         <!-- Review -->
-        <div class="my-lg-3 py-5">
-            <div class="container pt-md-2" id="reviews">
-                <div class="row pb-3">
+        <div class="my-lg-3">
+            <div class="container row justify-content-between pt-md-2" id="reviews">
+                <div class="col-6 row pb-3">
                     <div class="col-lg-4 col-md-5">
                         <h2 class="h3 mb-4">{{ $product->ratings->count() }} {{ __('Reviews') }}</h2>
                         <div class="star-rating text-warning me-2">
                             @foreach (range(1, 5) as $rate)
                                 @if ($product->avg_rate >= $rate)
                                     <i class="fa fa-star"></i>
-                                @elseif ($product->avg_rate == $rate + 0.5)
+                                @elseif ($product->avg_rate == $rate - 0.5)
                                     <i class="fa fa-star-half-o"></i>
                                 @else
                                     <i class="fa fa-star-o"></i>
                                 @endif
                             @endforeach
                         </div>
-                        <span class="d-inline-block align-middle">{{ $product->ratings->count() }} {{ __('Overall rating') }}</span>
+                        <span class="d-inline-block align-middle">{{ $product->avg_rate }} {{ __('Overall rating') }}</span>
                     </div>
                     <div class="col-lg-8 col-md-7">
                         @php
@@ -126,8 +126,7 @@
 
                     </div>
                 </div>
-                <hr class="mt-4 mb-3">
-                <div class="row pt-4">
+                <div class="col-6 row pb-3">
                     <!-- Reviews list-->
                     <div class="col-md-12">
                         <!-- Review-->
@@ -150,7 +149,7 @@
                                                 @foreach (range(1, 5) as $rate)
                                                     @if ($rating->rate >= $rate)
                                                         <i class="fa fa-star"></i>
-                                                    @elseif ($rating->rate == $rate + 0.5)
+                                                    @elseif ($rating->rate == $rate - 0.5)
                                                         <i class="fa fa-star-half-o"></i>
                                                     @else
                                                         <i class="fa fa-star-o"></i>
@@ -201,7 +200,7 @@
                                                     @foreach (range(1,5) as $rate)
                                                         @if ($product->avg_rate >= $rate)
                                                             <i class="fa fa-star"></i>
-                                                        @elseif ($product->avg_rate == $rate + 0.5)
+                                                        @elseif ($product->avg_rate == $rate - 0.5)
                                                             <i class="fa fa-star-half-o"></i>
                                                         @else
                                                             <i class="fa fa-star-o"></i>
