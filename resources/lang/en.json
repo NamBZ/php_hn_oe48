@@ -51,6 +51,8 @@
     "List Order Detail": "List Order Detail",
     "Order status": "Order status",
     "Grand Total": "Grand Total",
-    "Price": "Price"
+    "Price": "Price",
+    "Submit": "Submit",
+    "Cannot change status of order successfully or canceled": "Cannot change status of order successfully or canceled"
 
 }

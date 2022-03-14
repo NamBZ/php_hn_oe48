@@ -10,19 +10,19 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ __('Order Code') }}</th>
-                        <th>{{ __('Created at') }}</th>
-                        <th>{{ __('Order Status') }}</th>
-                        <th>{{ __('Total Price') }}</th>
-                        <th>{{ __('Action') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($orders->isNotEmpty())
+            @if ($orders->isNotEmpty())
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ __('Order Code') }}</th>
+                            <th>{{ __('Created at') }}</th>
+                            <th>{{ __('Order Status') }}</th>
+                            <th>{{ __('Total Price') }}</th>
+                            <th>{{ __('Action') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($orders as $key => $order)
                             <tr>
                                 <td>{{ ++$key }}</td>
@@ -37,16 +37,14 @@
                                 <td><a href="{{ route('user.rating.view', $order->id) }}" class="btn btn-primary">{{ __('View') }}</a></td>
                             </tr>
                         @endforeach
-                    @else
-                            <div class="alert alert-primary" role="alert">{{ __('Empty order') }}</div>
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                {{ $orders->links() }}
+            @else
+                    <div class="alert alert-primary" role="alert">{{ __('Empty') }}</div>
+            @endif
         </div>
         <!-- /.card-body -->
-        <div class="card-footer clearfix">
-            {{ $orders->links() }}
-        </div>
     </div>
     <!-- /.card -->
 </div>
