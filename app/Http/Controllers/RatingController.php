@@ -11,6 +11,7 @@ use App\Http\Requests\Rating\RatingRequest;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RatingController extends Controller
 {
@@ -27,33 +28,43 @@ class RatingController extends Controller
     public function showAllOrder($id)
     {
         $user = Auth::user();
-        $getOrder = Order::whereId($id)->get();
-        $orderDetails = OrderItem::whereOrderId($id)->with('product', 'rating')->get();
+        $orderInfo = $user->orders()->findOrFail($id);
+        $orderItems = $orderInfo->orderItems()->with('product', 'rating')->get();
         
         return view('user.rating.listOrder', [
             'user' => $user,
-            'orderDetails' => $orderDetails,
-            'getOrder' => $getOrder,
+            'orderInfo' => $orderInfo,
+            'orderItems' => $orderItems,
         ]);
     }
 
     public function addRating(RatingRequest $request, $id)
     {
         $orderItem = OrderItem::findOrFail($id);
+
+        if (!Gate::allows('add-rating', $orderItem->order)) {
+            return redirect()->back()
+                ->with('error', __('Can not access'));
+        }
+
         $orderItem->rstatus = RatingStatus::BLOCK;
         $orderItem->save();
 
-        $rating = Rating::create([
-            'rate' => $request->rate,
-            'comment' => $request->comment,
-            'order_item_id' => $id,
-            'product_id' => $request->product_id,
-            'order_id' => $request->order_id
-        ]);
+        $rating = Rating::updateOrCreate(
+            [
+                'order_item_id' => $id,
+                'product_id' => $orderItem->product_id,
+                'order_id' => $orderItem->order_id,
+            ],
+            [
+                'rate' => $request->rate,
+                'comment' => $request->comment,
+            ]
+        );
 
         // Update avg rate
-        $product = Product::findOrFail($request->product_id);
-        $avg_rate = Rating::where('product_id', $request->product_id)->avg('rate');
+        $product = $orderItem->product;
+        $avg_rate = Rating::where('product_id', $product->id)->avg('rate');
         $avg_rate = round($avg_rate * 2) / 2; // Round to the Nearest 0.5 (1.0, 1.5, 2.0, 2.5, etc.)
         $product->avg_rate = $avg_rate;
         $product->save();

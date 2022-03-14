@@ -50,15 +50,22 @@ class UserController extends Controller
         $user = Auth::user();
         $order = $user->orders()->findOrFail($id);
 
+        if ($order->status != OrderStatus::NEW_ORDER &&
+            $order->status != OrderStatus::IN_PROCCESS) {
+            return redirect()->back()->with('error', __('Failed to cancel this order'));
+        }
+
         $order->status = OrderStatus::CANCELED;
 
         if ($request->reason_canceled) {
             $order->reason_canceled = $request->reason_canceled;
-            foreach ($order->products as $product) {
-                $product->quantity += $product->pivot->quantity;
-                $product->sold -= $product->pivot->quantity;
-                $product->update();
-            }
+        }
+
+        // Update product quantity when cancel
+        foreach ($order->products as $product) {
+            $product->quantity += $product->pivot->quantity;
+            $product->sold -= $product->pivot->quantity;
+            $product->update();
         }
 
         if ($order->save()) {
