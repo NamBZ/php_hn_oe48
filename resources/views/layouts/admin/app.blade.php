@@ -8,6 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    
+     <!-- Scripts -->
+     <script src="{{ asset('js/app.js') }}" defer></script>
+     <script src="{{ asset('bower_components/adminlte/plugins/jquery/jquery.min.js') }}"></script>
 
     <!-- CKEditor -->
     <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
@@ -51,7 +55,7 @@
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="{{ asset('bower_components/adminlte/plugins/jquery/jquery.min.js') }}"></script>
+<!-- <script src="{{ asset('bower_components/adminlte/plugins/jquery/jquery.min.js') }}"></script> -->
 <!-- Bootstrap -->
 <script src="{{ asset('bower_components/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE -->

@@ -54,6 +54,11 @@ class UserController extends Controller
 
         if ($request->reason_canceled) {
             $order->reason_canceled = $request->reason_canceled;
+            foreach ($order->products as $product) {
+                $product->quantity += $product->pivot->quantity;
+                $product->sold -= $product->pivot->quantity;
+                $product->update();
+            }
         }
 
         if ($order->save()) {

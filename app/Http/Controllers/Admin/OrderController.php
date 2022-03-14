@@ -22,12 +22,12 @@ class OrderController extends Controller
 
     public function viewOrder($id)
     {
-        $order = Order::findOrFail($id);
-        $getOrder = $order->whereId($id)->get();
-        $getCustomer = $order->load('user')->whereId($id)->get();
-        $orderDetails = OrderItem::whereOrderId($id)->with('product')->get();
-        $getShipping = Shipping::whereOrderId($id)->get();
-        $orderStatusArray = [
+        $orders = Order::findOrFail($id);
+        $orderInfo = $orders->whereId($id)->get();
+        $getCustomer = $orders->user()->get();
+        $orderItems = $orders->orderItems()->with('product')->get();
+        $getShipping = $orders->shipping()->get();
+        $orderStatus = [
             OrderStatus::NEW_ORDER => __('New Order'),
             OrderStatus::IN_PROCCESS => __('In Proccess'),
             OrderStatus::IN_SHIPPING => __('In Shipping'),
@@ -36,19 +36,31 @@ class OrderController extends Controller
         ];
 
         return view('dashboards.admin.orders.viewOrder', [
-            'orderDetails' => $orderDetails,
+            'orders' => $orders,
+            'orderItems' => $orderItems,
             'getCustomer' => $getCustomer,
             'getShipping' => $getShipping,
-            'getOrder' => $getOrder,
-            'orderStatusArray' => $orderStatusArray,
+            'orderInfo' => $orderInfo,
+            'orderStatus' => $orderStatus,
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $orderDetails = OrderItem::findOrFail($id);
-        $order = Order::whereId($orderDetails->order_id);
-        $order->update(['status'=> $request->status]);
+        $order = Order::whereId($id)->first();
+        if ($order->status == OrderStatus::COMPLETED || $order->status == OrderStatus::CANCELED) {
+            return Redirect::route('admin.orders.index')
+                ->with('error', __('Cannot change status of order successfully or canceled'));
+        }
+        if ($request->status == OrderStatus::CANCELED) {
+            foreach ($order->products as $product) {
+                $product->quantity += $product->pivot->quantity;
+                $product->sold -= $product->pivot->quantity;
+                $product->update();
+            }
+            $order->update(['reason_canceled' => $request->reason_canceled]);
+        }
+        $order->update(['status' => $request->status]);
 
         return Redirect::route('admin.orders.index')
             ->with('success', __('Update order status successfully'));
