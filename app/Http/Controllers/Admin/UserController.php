@@ -4,15 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
-use App\Enums\UserStatus;
 use App\Enums\UserRole;
-use Illuminate\Http\Request;
+use App\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 
 class UserController extends Controller
 {
+    protected $userRepo;
+
+    public function __construct(UserRepositoryInterface $userRepo)
+    {
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(config('pagination.per_page'));
+        $users = $this->userRepo->paginate(config('pagination.per_page'));
 
         return view('dashboards.admin.users.index', [
             "users" => $users,
@@ -45,14 +52,15 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->role = $request->role;
-        $user->password = Hash::make($request->password);
+        $user_data = $request->only([
+            'name',
+            'email',
+            'phone',
+            'role',
+        ]);
+        $user_data['password'] = Hash::make($request->password);
 
-        if ($user->save()) {
+        if ($this->userRepo->create($user_data)) {
             return redirect()->route('admin.users.index')->with('success', __('Create successfully'));
         }
 
@@ -78,7 +86,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->userRepo->findOrFail($id);
 
         return view('dashboards.admin.users.edit', [
             'user' => $user,
@@ -94,16 +102,19 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->role = $request->role;
-        $user->address = $request->address;
+        $user = $this->userRepo->findOrFail($id);
+        $user_data = $request->only([
+            'name',
+            'phone',
+            'role',
+            'address',
+        ]);
+
         if (isset($request->password)) {
-            $user->password = Hash::make($request->password);
+            $user_data['password'] = Hash::make($request->password);
         }
 
-        if ($user->save()) {
+        if ($this->userRepo->update($user->id, $user_data)) {
             return redirect()->route('admin.users.index')->with('success', __('Update successfully'));
         }
 
@@ -118,14 +129,13 @@ class UserController extends Controller
      */
     public function blockUser($id)
     {
-        $user = User::findorfail($id);
+        $user = $this->userRepo->findorfail($id);
 
         if ($user->role == UserRole::ADMIN) {
             return redirect()->back()->with('error', __('Can not block admin'));
         }
-        $user->status = UserStatus::BAN;
 
-        if ($user->save()) {
+        if ($this->userRepo->blockUser($user->id)) {
             return redirect()->route('admin.users.index')->with('success', __('User is locked'));
         }
 
@@ -140,11 +150,9 @@ class UserController extends Controller
      */
     public function unblockUser($id)
     {
-        $user = User::findorfail($id);
+        $user = $this->userRepo->findorfail($id);
 
-        $user->status = UserStatus::ACTIVE;
-
-        if ($user->save()) {
+        if ($this->userRepo->unblockUser($user->id)) {
             return redirect()->route('admin.users.index')->with('success', __('User is unlocked'));
         }
 
@@ -159,9 +167,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findorfail($id);
+        $user = $this->userRepo->findorfail($id);
 
-        $user->delete();
+        $this->userRepo->delete($user->id);
 
         return redirect()->route('admin.users.index')
             ->with('success', __('Delete successfuly'));

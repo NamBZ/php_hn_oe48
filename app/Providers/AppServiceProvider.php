@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(
+            UserRepositoryInterface::class,
+            UserRepository::class
+        );
     }
 
     /**
