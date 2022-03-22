@@ -48,19 +48,4 @@ class Category extends Model
     {
         return is_null($this->parent_id);
     }
-
-
-    public function getCategoryID($parent_id)
-    {
-        $list_category_id[] = $parent_id;
-        $list_children = Category::where('parent_id', $parent_id)->get();
-
-        if ($list_children->isNotEmpty()) {
-            foreach ($list_children as $sub_cate) {
-                $list_category_id = array_merge($list_category_id, Category::getCategoryID($sub_cate->id));
-            }
-        }
-
-        return $list_category_id;
-    }
 }

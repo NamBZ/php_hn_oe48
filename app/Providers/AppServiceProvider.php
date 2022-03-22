@@ -8,6 +8,10 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +25,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             UserRepositoryInterface::class,
             UserRepository::class
+        );
+
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryRepository::class
+        );
+
+        $this->app->singleton(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
         );
     }
 
