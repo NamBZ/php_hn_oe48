@@ -9,7 +9,7 @@ abstract class BaseRepository implements RepositoryInterface
     //model muốn tương tác
     protected $model;
 
-   //khởi tạo
+    //khởi tạo
     public function __construct()
     {
         $this->setModel();
@@ -78,6 +78,6 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function paginate($per_page)
     {
-        return $this->model->paginate($per_page);
+        return $this->model->orderBy('created_at', 'DESC')->paginate($per_page);
     }
 }

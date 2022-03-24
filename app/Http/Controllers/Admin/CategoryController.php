@@ -3,15 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
-use App\Models\Product;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+
+    protected $productRepository;
+
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepository,
+        ProductRepositoryInterface $productRepository
+    ) {
+        $this->categoryRepository = $categoryRepository;
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +33,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('created_at', 'DESC')
+        $categories = $this->categoryRepository
             ->paginate(config('pagination.per_page'));
 
         return view('dashboards.admin.categories.index', compact('categories'));
@@ -32,7 +46,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('created_at', 'DESC')->get();
+        $categories = $this->categoryRepository->getAll();
 
         return view('dashboards.admin.categories.create', compact('categories'));
     }
@@ -45,7 +59,7 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        Category::firstOrCreate($request->validated());
+        $this->categoryRepository->create($request->validated());
 
         return Redirect::route('admin.categories.index')
             ->with('success', __('Add category successfuly'));
@@ -70,7 +84,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $category = $this->categoryRepository->findOrFail($id);
         $categories = $category->load('parent')
             ->whereNull('parent_id')
             ->where('id', '!=', $id)
@@ -89,8 +103,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-    
-        $category = Category::whereId($id)->update($request->validated());
+        $category = $this->categoryRepository->update($id, $request->validated());
 
         return Redirect::route('admin.categories.index')
             ->with('success', __('Update category successfuly'));
@@ -104,14 +117,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
+        $category = $this->categoryRepository->findOrFail($id);
         $defaultCate = $category->first()->id;
-        Product::whereCategoryId($id)->update(['category_id' => $defaultCate]);
+        $this->productRepository->whereCategoryId($id)->update(['category_id' => $defaultCate]);
         if ($category->id == $defaultCate) {
             return Redirect::route('admin.categories.index')
                 ->with('info', __('This category cannot be delete because needed'));
         }
-        $category->delete();
+        $this->categoryRepository->delete($category->id);
 
         return Redirect::route('admin.categories.index')
             ->with('success', __('Delete category successfuly'));
