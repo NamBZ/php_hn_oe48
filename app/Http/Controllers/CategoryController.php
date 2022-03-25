@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Product;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepo;
+
+    protected $productRepo;
+
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->categoryRepo = $categoryRepo;
+        $this->productRepo = $productRepo;
+    }
+
     /**
      * Display the specified resource.
      *
@@ -16,10 +28,10 @@ class CategoryController extends Controller
      */
     public function show($slug, Request $request)
     {
-        $category = Category::where('slug', $slug)->with('children')->firstOrFail();
-        $list_category_id = Category::getCategoryID($category->id);
+        $category = $this->categoryRepo->getCategoryBySlugWithChildren($slug);
+        $list_category_id = $this->categoryRepo->getCategoryID($category->id);
 
-        $list_products = Product::whereIn('category_id', $list_category_id);
+        $list_products = $this->productRepo->whereIn('category_id', $list_category_id);
 
         $search = $request->get('search');
         $sort = $request->get('sort');
