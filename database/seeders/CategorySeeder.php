@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use File;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,14 +16,16 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
-        DB::table('categories')->insert([
-            'name' => 'danh muc sach',
-            'slug' => 'danh-muc-sach',
-            'parent_id' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        $categories = Category::factory()->count(10)->create();
+        $json = File::get("database/data/categories.json");
+        $categories = json_decode($json);
+
+        foreach ($categories as $category) {
+            Category::create([
+                "id" => $category->id,
+                "parent_id" => $category->parent_id,
+                "name" => $category->name,
+                "slug" => $category->slug,
+            ]);
+        }
     }
 }

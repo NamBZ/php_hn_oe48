@@ -16,7 +16,7 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::all()->random()->id,
+            'user_id' => $this->faker->randomDigitNotNull(),
             'order_code' => Str::random(8),
             'total_price' => 10000000,
             'status' => $this->faker->numberBetween(0,4),
