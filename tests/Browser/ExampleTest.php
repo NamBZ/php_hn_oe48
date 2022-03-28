@@ -9,6 +9,19 @@ use Tests\DuskTestCase;
 class ExampleTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    /**
+     * A basic setup before excute test.
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:refresh');
+        $this->artisan('db:seed --class=UserSeeder');
+    }
+
     /**
      * A basic browser test example.
      *
