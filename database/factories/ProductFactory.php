@@ -19,7 +19,7 @@ class ProductFactory extends Factory
         $title = $this->faker->sentence();
 
         return [
-            'category_id' => Category::all()->random()->id,
+            'category_id' => $this->faker->randomDigitNotNull(),
             'title' => $title,
             'content' => $this->faker->paragraph(),
             'description' => $title,
