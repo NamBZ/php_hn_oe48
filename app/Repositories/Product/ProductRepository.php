@@ -17,4 +17,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return $this->model->whereIn($column, $value);
     }
+
+    public function whereCategoryId($id)
+    {
+        return $this->model->whereCategoryId($id);
+    }
 }

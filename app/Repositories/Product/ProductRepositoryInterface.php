@@ -8,4 +8,6 @@ interface ProductRepositoryInterface extends RepositoryInterface
 {
     //find
     public function whereIn($column, $value);
+
+    public function whereCategoryId($id);
 }

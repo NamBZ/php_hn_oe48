@@ -7,6 +7,8 @@ use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
@@ -14,6 +16,18 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    protected $categoryRepository;
+
+    protected $productRepository;
+
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepository,
+        ProductRepositoryInterface $productRepository
+    ) {
+        $this->categoryRepository = $categoryRepository;
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +35,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at', 'DESC')
+        $products = $this->productRepository
             ->paginate(config('pagination.per_page'));
 
         return view('dashboards.admin.products.index', compact('products'));
@@ -34,7 +48,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categoryRepository->getAll();
 
         return view('dashboards.admin.products.create', compact('categories'));
     }
@@ -52,7 +66,7 @@ class ProductController extends Controller
             $request->image->getClientOriginalExtension();
         $request->image->move(public_path($dirImages), $imageName);
         $slug = Str::slug($request->title);
-        $product = Product::create([
+        $product = $this->productRepository->create([
             'title' => $request->title,
             'category_id' => $request->category_id,
             'slug' => $slug,
@@ -87,8 +101,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $product = $this->productRepository->findOrFail($id);
+        $categories = $this->categoryRepository->getAll();
 
         return view('dashboards.admin.products.edit', compact('categories', 'product'));
     }
@@ -102,24 +116,24 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->productRepository->findOrFail($id);
         $slug = Str::slug($request->title);
         $dirImages = "images/uploads/products/";
-        if ($request->hasfile('image')) {
+        if ($request->has('image')) {
             $imageName = explode("/", $product->image);
             $destination = $dirImages . end($imageName);
             if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $file = $request->file('image');
+            $file = $request->image;
             $extension = $file->getClientOriginalExtension();
             $newImage = time() . '-' . rand(0, 255) . '-' .  $request->title . '.' . $extension;
-            $file->move($dirImages, $newImage);
+            $file->move(public_path($dirImages), $newImage);
             $imageLink = asset($dirImages . $newImage);
         } else {
             $imageLink = $request->imageExist;
         }
-        $product->update([
+        $this->productRepository->update($id, [
             'title' => $request->title,
             'category_id' => $request->category_id,
             'slug' => $slug,
@@ -143,13 +157,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findorfail($id);
+        $product = $this->productRepository->findOrFail($id);
         $dirImages = 'images/uploads/products/';
-        $destination =  $dirImages . $product->image;
+        $imageName = explode("/", $product->image);
+        $destination = $dirImages . end($imageName);
         if (File::exists($destination)) {
             File::delete($destination);
         }
-        $product->delete();
+        $this->productRepository->delete($product->id);
 
         return Redirect::route('admin.products.index')
             ->with('success', __('Delete product successfuly'));
