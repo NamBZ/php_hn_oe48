@@ -12,6 +12,12 @@ use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Order\OrderRepository;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderItem\OrderItemRepository;
+use App\Repositories\OrderItem\OrderItemRepositoryInterface;
+use App\Repositories\Shipping\ShippingRepository;
+use App\Repositories\Shipping\ShippingRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +41,21 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ProductRepositoryInterface::class,
             ProductRepository::class
+        );
+
+        $this->app->singleton(
+            OrderRepositoryInterface::class,
+            OrderRepository::class
+        );
+
+        $this->app->singleton(
+            OrderItemRepositoryInterface::class,
+            OrderItemRepository::class
+        );
+
+        $this->app->singleton(
+            ShippingRepositoryInterface::class,
+            ShippingRepository::class
         );
     }
 

@@ -8,13 +8,33 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Shipping\StoreRequest;
 use App\Enums\OrderStatus;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Shipping;
-use App\Models\Product;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderItem\OrderItemRepositoryInterface;
+use App\Repositories\Shipping\ShippingRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class CartController extends Controller
 {
+    protected $orderRepo;
+
+    protected $orderItemRepo;
+
+    protected $shippingRepo;
+
+    protected $productRepo;
+
+    public function __construct(
+        OrderRepositoryInterface $orderRepo,
+        OrderItemRepositoryInterface $orderItemRepo,
+        ShippingRepositoryInterface $shippingRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->orderRepo = $orderRepo;
+        $this->orderItemRepo = $orderItemRepo;
+        $this->shippingRepo = $shippingRepo;
+        $this->productRepo = $productRepo;
+    }
+
     public function index()
     {
         return view('user.cart');
@@ -24,9 +44,9 @@ class CartController extends Controller
     {
         $id = $request->id;
         $quantity = $request->quantity;
-        $product = Product::findOrFail($id);
+        $product = $this->productRepo->findOrFail($id);
 
-        if ($quantity > $product->quantity || $product->quantity < 1) {
+        if ($quantity > $product->quantity || !is_numeric($product->quantity) || $product->quantity < 1) {
             return redirect()->back()
                 ->with('error', __('The quantity you have selected is invalid'));
         }
@@ -86,7 +106,7 @@ class CartController extends Controller
 
         if (!$check_quantity) {
             return redirect()->back()
-                ->with('success', __('There are some items are the maximum quantity'));
+                ->with('warning', __('There are some items are the maximum quantity'));
         }
 
         return redirect()->back()
@@ -129,11 +149,12 @@ class CartController extends Controller
 
         $shipping_info = $request->validated();
 
-        // Begin transaction
-        DB::beginTransaction();
         try {
+            // Begin transaction
+            DB::beginTransaction();
+
             // Insert order to get order_id
-            $order = Order::create([
+            $order = $this->orderRepo->create([
                 'user_id' => Auth::id(),
                 'order_code' => Str::random(8),
                 'total_price' => $request->session()->get('grandTotal'),
@@ -142,7 +163,7 @@ class CartController extends Controller
 
             // Insert order_items
             foreach ($cart as $product_id => $item) {
-                $product = Product::find($product_id);
+                $product = $this->productRepo->find($product_id);
                 if (!$product || $product->quantity < $item->selected_quantity) {
                     DB::rollBack();
 
@@ -151,7 +172,7 @@ class CartController extends Controller
                 }
 
                 // Insert order items
-                OrderItem::create([
+                $this->orderItemRepo->create([
                     'order_id' => $order->id,
                     'product_id' => $item->id,
                     'price' => $item->retail_price,
@@ -159,13 +180,15 @@ class CartController extends Controller
                 ]);
 
                 // Update product quantity
-                $product->quantity -= $item->selected_quantity;
-                $product->sold += $item->selected_quantity;
-                $product->save();
+                $product_data_update = [
+                    'quantity' => $product->quantity - $item->selected_quantity,
+                    'sold' => $product->sold + $item->selected_quantity,
+                ];
+                $this->productRepo->update($product->id, $product_data_update);
             }
 
             // Insert shipping address
-            Shipping::create(array_merge(
+            $this->shippingRepo->create(array_merge(
                 $shipping_info,
                 [
                     'order_id' => $order->id,
