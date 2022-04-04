@@ -52,4 +52,6 @@ interface RepositoryInterface
      * @return mixed
      */
     public function paginate($per_page);
+
+    public function where($column, $value);
 }

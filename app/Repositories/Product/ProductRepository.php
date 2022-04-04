@@ -22,4 +22,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return $this->model->whereCategoryId($id);
     }
+
+    public function updateCategoryIdOfProductWhenCategoryDeleted($id, $attributes = [])
+    {
+        $result = $this->whereCategoryId($id);
+        if ($result) {
+            $result->update($attributes);
+
+            return $result;
+        }
+
+        return false;
+    }
 }

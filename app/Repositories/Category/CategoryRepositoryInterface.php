@@ -11,5 +11,7 @@ interface CategoryRepositoryInterface extends RepositoryInterface
 
     public function getCategoryBySlugWithChildren($slug);
 
-    public function where($column, $value);
+    public function loadParent($id);
+
+    public function getDefaultCategoryId();
 }

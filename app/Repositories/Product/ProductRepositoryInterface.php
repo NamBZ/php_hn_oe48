@@ -10,4 +10,6 @@ interface ProductRepositoryInterface extends RepositoryInterface
     public function whereIn($column, $value);
 
     public function whereCategoryId($id);
+
+    public function updateCategoryIdOfProductWhenCategoryDeleted($id, $attributes = []);
 }

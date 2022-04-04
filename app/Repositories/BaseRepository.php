@@ -80,4 +80,9 @@ abstract class BaseRepository implements RepositoryInterface
     {
         return $this->model->orderBy('created_at', 'DESC')->paginate($per_page);
     }
+
+    public function where($column, $value)
+    {
+        return $this->model->where($column, $value)->get();
+    }
 }
