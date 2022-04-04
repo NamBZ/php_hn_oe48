@@ -85,11 +85,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->categoryRepository->findOrFail($id);
-        $categories = $category->load('parent')
-            ->whereNull('parent_id')
-            ->where('id', '!=', $id)
-            ->orderBy('id', 'DESC')
-            ->get();
+        $categories = $this->categoryRepository->loadParent($id);
 
         return view('dashboards.admin.categories.edit', compact('category', 'categories'));
     }
@@ -118,8 +114,10 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = $this->categoryRepository->findOrFail($id);
-        $defaultCate = $category->first()->id;
-        $this->productRepository->whereCategoryId($id)->update(['category_id' => $defaultCate]);
+        $defaultCate = $this->categoryRepository->getDefaultCategoryId();
+        $this->productRepository->updateCategoryIdOfProductWhenCategoryDeleted($id, [
+            'category_id' => $defaultCate,
+        ]);
         if ($category->id == $defaultCate) {
             return Redirect::route('admin.categories.index')
                 ->with('info', __('This category cannot be delete because needed'));
