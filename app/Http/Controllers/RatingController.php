@@ -4,23 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Enums\RatingStatus;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
 use App\Http\Requests\Rating\RatingRequest;
-use App\Models\Rating;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderItem\OrderItemRepositoryInterface;
+use App\Repositories\Rating\RatingRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class RatingController extends Controller
 {
+    protected $orderRepo;
+
+    protected $orderItemRepo;
+
+    protected $ratingRepo;
+
+    protected $productRepo;
+
+    public function __construct(
+        OrderRepositoryInterface $orderRepo,
+        OrderItemRepositoryInterface $orderItemRepo,
+        RatingRepositoryInterface $ratingRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->orderRepo = $orderRepo;
+        $this->orderItemRepo = $orderItemRepo;
+        $this->ratingRepo = $ratingRepo;
+        $this->productRepo = $productRepo;
+    }
+
     public function index()
     {
         $user = Auth::user();
-        $orders = $user->orders()->whereStatus(OrderStatus::COMPLETED)
-            ->orderBy('created_at', 'DESC')
-            ->paginate(config('pagination.per_page'));
+        $orders = $this->orderRepo->getCompletedOrdersOfAuthUser();
 
         return view('user.rating.index', compact('orders', 'user'));
     }
@@ -28,7 +46,7 @@ class RatingController extends Controller
     public function showAllOrder($id)
     {
         $user = Auth::user();
-        $orderInfo = $user->orders()->findOrFail($id);
+        $orderInfo = $this->orderRepo->getOrderDetailsOfAuthUser($id);
         $orderItems = $orderInfo->orderItems()->with('product', 'rating')->get();
         
         return view('user.rating.listOrder', [
@@ -40,17 +58,16 @@ class RatingController extends Controller
 
     public function addRating(RatingRequest $request, $id)
     {
-        $orderItem = OrderItem::findOrFail($id);
+        $orderItem = $this->orderItemRepo->findOrFail($id);
 
         if (!Gate::allows('add-rating', $orderItem->order)) {
             return redirect()->back()
                 ->with('error', __('Can not access'));
         }
 
-        $orderItem->rstatus = RatingStatus::BLOCK;
-        $orderItem->save();
+        $this->orderItemRepo->blockRating($id);
 
-        $rating = Rating::updateOrCreate(
+        $rating = $this->ratingRepo->updateOrCreate(
             [
                 'order_item_id' => $id,
                 'product_id' => $orderItem->product_id,
@@ -63,11 +80,12 @@ class RatingController extends Controller
         );
 
         // Update avg rate
-        $product = $orderItem->product;
-        $avg_rate = Rating::where('product_id', $product->id)->avg('rate');
+        $avg_rate = $this->ratingRepo->avgRate($orderItem->product_id);
         $avg_rate = round($avg_rate * 2) / 2; // Round to the Nearest 0.5 (1.0, 1.5, 2.0, 2.5, etc.)
-        $product->avg_rate = $avg_rate;
-        $product->save();
+        $this->productRepo->updateAvg(
+            $orderItem->product_id,
+            $avg_rate
+        );
 
         return redirect()->back()
             ->with('success', __('rating successfully'));

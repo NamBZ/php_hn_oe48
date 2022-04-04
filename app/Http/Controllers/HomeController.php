@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class HomeController extends Controller
 {
+    protected $categoryRepo;
+
+    protected $productRepo;
+
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->categoryRepo = $categoryRepo;
+        $this->productRepo = $productRepo;
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -15,9 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $list_products = Product::orderBy('created_at', 'DESC')
-            ->paginate(config('pagination.per_page'));
-        $categories = Category::whereNull('parent_id')->with('children')->get();
+        $list_products = $this->productRepo->paginate(config('pagination.per_page'));
+        $categories = $this->categoryRepo->getParentCategoriesWithChild();
 
         return view('home', [
             'categories' => $categories,

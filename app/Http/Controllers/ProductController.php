@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Rating;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
+    protected $productRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->productRepo = $productRepo;
+    }
+
     /**
      * Display the specified resource.
      *
@@ -16,17 +23,44 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $product = Product::where('slug', '=', $slug)->firstOrFail();
-        $ratings = $product->ratings()->paginate(config('pagination.rating_per_page'));
-        $related_products = Product::where('category_id', $product->category->id)
-            ->where('id', '!=', $product->id)
-            ->take(config('pagination.related'))
-            ->get();
+        $product = $this->productRepo->getProductDetails($slug);
+
+        $ratings = $this->productRepo
+            ->getProductRatings(
+                $product->id,
+                config('pagination.rating_per_page')
+            );
+
+        $related_products = $this->productRepo
+            ->getRelatedProducts(
+                $product,
+                config('pagination.related')
+            );
 
         return view('products.details', [
             'product' => $product,
             'ratings' => $ratings,
             'related_products' => $related_products,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('query');
+        if ($search) {
+            $list_products = $this->productRepo
+                ->search(
+                    'title',
+                    'LIKE',
+                    "%{$search}%",
+                    config('pagination.per_page')
+                );
+        } else {
+            return redirect()->back();
+        }
+
+        return view('search', [
+            'list_products' => $list_products,
         ]);
     }
 }
