@@ -6,5 +6,5 @@ use App\Repositories\RepositoryInterface;
 
 interface OrderItemRepositoryInterface extends RepositoryInterface
 {
-
+    public function blockRating($rating_id);
 }

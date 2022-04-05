@@ -14,4 +14,8 @@ interface CategoryRepositoryInterface extends RepositoryInterface
     public function loadParent($id);
 
     public function getDefaultCategoryId();
+    
+    public function where($column, $value);
+
+    public function getParentCategoriesWithChild();
 }

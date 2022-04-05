@@ -34,4 +34,53 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         return false;
     }
+    
+    public function getProductDetails($slug)
+    {
+        $result = $this->model->where('slug', $slug)->firstOrFail();
+
+        return $result;
+    }
+
+    public function getProductRatings($product_id, $rating_per_page)
+    {
+        $ratings = $this->findOrFail($product_id)
+            ->ratings()
+            ->paginate($rating_per_page);
+
+        return $ratings;
+    }
+
+    public function getRelatedProducts($product, $amount)
+    {
+        $related_products = $this->model
+            ->where('category_id', $product->category->id)
+            ->where('id', '!=', $product->id)
+            ->take($amount)
+            ->get();
+
+        return $related_products;
+    }
+
+    public function search($column, $operator, $value, $per_page)
+    {
+        $result = $this->model
+            ->where($column, $operator, $value)
+            ->paginate($per_page);
+
+        return $result;
+    }
+
+    public function updateAvg($product_id, $avg_rate)
+    {
+        $product = $this->find($product_id);
+
+        $product->avg_rate = $avg_rate;
+
+        if ($product->save()) {
+            return true;
+        }
+
+        return false;
+    }
 }

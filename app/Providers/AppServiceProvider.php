@@ -18,6 +18,8 @@ use App\Repositories\OrderItem\OrderItemRepository;
 use App\Repositories\OrderItem\OrderItemRepositoryInterface;
 use App\Repositories\Shipping\ShippingRepository;
 use App\Repositories\Shipping\ShippingRepositoryInterface;
+use App\Repositories\Rating\RatingRepository;
+use App\Repositories\Rating\RatingRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,6 +58,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ShippingRepositoryInterface::class,
             ShippingRepository::class
+        );
+
+        $this->app->singleton(
+            RatingRepositoryInterface::class,
+            RatingRepository::class
         );
     }
 
