@@ -9,8 +9,6 @@ use App\Http\Requests\Category\UpdateRequest;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Category;
-use App\Models\Product;
 
 class CategoryController extends Controller
 {

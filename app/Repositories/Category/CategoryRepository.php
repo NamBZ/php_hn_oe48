@@ -32,6 +32,11 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return $this->model->where('slug', $slug)->with('children')->firstOrFail();
     }
 
+    public function where($column, $value)
+    {
+        return $this->model->where($column, $value)->get();
+    }
+
     public function loadParent($id)
     {
         return $this->model->load('parent')

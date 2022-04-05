@@ -83,4 +83,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         return false;
     }
+
+    public function getQuantity($product)
+    {
+        return $product->pivot->quantity;
+    }
 }

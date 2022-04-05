@@ -31,4 +31,31 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
         return $orders;
     }
+    
+    public function getCustomer($relation, $orderId)
+    {
+        return $this->findOrFail($orderId)->user()->get();
+    }
+    
+    public function getOrderItems($relation, $orderId)
+    {
+        return $this->findOrFail($orderId)->orderItems()->with('product')->get();
+    }
+    
+    public function getShipping($relation, $orderId)
+    {
+        return $this->findOrFail($orderId)->shipping()->get();
+    }
+
+    public function relateToProduct($id)
+    {
+        $order = $this->find($id);
+
+        return $order->products;
+    }
+
+    public function getQuantity($order)
+    {
+        return $order->pivot->quantity;
+    }
 }
