@@ -283,3 +283,101 @@ img {
 .list-category nav a:not(:hover) {
     text-decoration: none;
 }
+
+.bell {
+    cursor: pointer;
+    position: relative;
+}
+
+.bell:hover .notifications{
+    height: auto;
+    display: block;
+    opacity: 1;
+}
+
+.notifications {
+    display: none;
+    width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    opacity: 0;
+    position: absolute;
+    z-index: 99999;
+    right: 0;
+    left: auto;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.notifications-item {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding: 6px 9px;
+    margin-bottom: 0px;
+    cursor: pointer
+}
+
+.notifications-item.unread {
+    background-color: rgba(255,242,238,.85);
+}
+
+.notifications-item:hover {
+    background-color: #eee;
+}
+
+.notifications-item:first-child:hover {
+    border-radius: 3px 3px 0px 0px;
+}
+
+.notifications-item:last-child:hover {
+    border-radius: 0px 0px 3px 3px;
+}
+
+.notifications-item i.fa {
+    display: block;
+    margin-right: 9px;
+    border-radius: 50%;
+    margin-top: 2px;
+    position: absolute;
+    right: 0;
+}
+
+.notifications-item .text h6 {
+    color: #777;
+    font-size: 16px;
+    margin-top: 3px;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.notifications-item .text p {
+    color: #aaa;
+    font-size: 12px;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: .45rem;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(27, 27, 27, .4);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-track{
+    background: transparent;
+}

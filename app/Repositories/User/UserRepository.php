@@ -37,4 +37,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return false;
     }
+
+    //Send notification to user
+    public function sendNotify($id, $event)
+    {
+        $user = $this->find($id);
+        if ($user) {
+            $user->notify($event);
+
+            return true;
+        }
+
+        return false;
+    }
 }

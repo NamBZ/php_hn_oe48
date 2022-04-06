@@ -6,6 +6,8 @@ use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Notifications\UpdateOrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -16,10 +18,12 @@ class OrderController extends Controller
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        UserRepositoryInterface $userRepository
     ) {
         $this->orderRepository = $orderRepository;
         $this->productRepository = $productRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function index()
@@ -71,6 +75,10 @@ class OrderController extends Controller
             $order->update(['reason_canceled' => $request->reason_canceled]);
         }
         $order->update(['status' => $request->status]);
+
+        // Send notification to user
+        $eventNotify = new UpdateOrderStatus($order);
+        $this->userRepository->sendNotify($order->user_id, $eventNotify);
 
         return Redirect::route('admin.orders.index')
             ->with('success', __('Update order status successfully'));

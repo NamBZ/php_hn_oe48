@@ -897,5 +897,12 @@
     "Submit" : "Gửi",
     "Cannot change status of order successfully or canceled": "Không thể thay đổi đơn hàng đã hoàn thành hoặc đã hủy",
     "Revenue Statistics": "Thống kê doanh thu",
-    "Revenue": "Doanh thu"
+    "Revenue": "Doanh thu",
+    "Order Status Update" : "Thông tin đơn hàng",
+    "Order #:code recently added" : "Đơn hàng #:code đã đặt thành công. Vui lòng kiểm tra lại!",
+    "Order #:code has been approved" : "Đơn hàng #:code đã được chấp nhận giao. Vui lòng kiểm tra lại!",
+    "Order #:code in transit" : "Đơn hàng #:code đang trên đường vận chuyển đến bạn. Vui lòng kiểm tra lại!",
+    "Order #:code is completed" : "Đơn hàng #:code đã được đánh dấu hoàn thành. Vui lòng kiểm tra lại!",
+    "Order #:code is canceled" : "Đơn hàng #:code bị từ chối. Vui lòng kiểm tra lại!"
+
 }

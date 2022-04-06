@@ -55,5 +55,11 @@
     "Submit": "Submit",
     "Cannot change status of order successfully or canceled": "Cannot change status of order successfully or canceled",
     "Revenue Statistics": "Revenue Statistics",
-    "Revenue": "Revenue"
+    "Revenue": "Revenue",
+    "Order #:code recently added" : "Order #:code recently added. Please check it again!",
+    "Order #:code has been approved" : "Order #:code has been approved. Please check it again!",
+    "Order #:code in transit" : "Order #:code in transit. Please check it again!",
+    "Order #:code is completed" : "Order #:code is completed. Please check it again!",
+    "Order #:code is canceled" : "Order #:code is canceled. Please check it again!"
+
 }
