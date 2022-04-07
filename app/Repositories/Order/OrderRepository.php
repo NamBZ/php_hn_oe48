@@ -15,6 +15,15 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         return Order::class;
     }
 
+    public function getOrdersOfAuthUser()
+    {
+        $orders = Auth::user()->orders()
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('pagination.per_page'));
+
+        return $orders;
+    }
+
     public function getCompletedOrdersOfAuthUser()
     {
         $orders = Auth::user()->orders()
@@ -27,7 +36,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
     public function getOrderDetailsOfAuthUser($order_id)
     {
-        $orders = Auth::user()->orders()->findOrFail($order_id);
+        $orders = Auth::user()->orders()->with('orderItems', 'shipping')->findOrFail($order_id);
 
         return $orders;
     }

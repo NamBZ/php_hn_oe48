@@ -180,11 +180,14 @@ class CartController extends Controller
                 ]);
 
                 // Update product quantity
-                $product_data_update = [
-                    'quantity' => $product->quantity - $item->selected_quantity,
-                    'sold' => $product->sold + $item->selected_quantity,
-                ];
-                $this->productRepo->update($product->id, $product_data_update);
+                $product_quantity_update = $product->quantity - $item->selected_quantity;
+                $product_sold_update = $product->sold + $item->selected_quantity;
+
+                $this->productRepo->updateProductQuantity(
+                    $product->id,
+                    $product_quantity_update,
+                    $product_sold_update
+                );
             }
 
             // Insert shipping address

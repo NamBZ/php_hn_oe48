@@ -455,7 +455,7 @@ class CartControllerTest extends TestCase
         $this->orderRepo->shouldReceive('create')->andReturn($order);
         $this->orderItemRepo->shouldReceive('create')->andReturn(true);
         $this->shippingRepo->shouldReceive('create')->andReturn(true);
-        $this->productRepo->shouldReceive('update')->andReturn(true);
+        $this->productRepo->shouldReceive('updateProductQuantity')->andReturn(true);
 
         DB::shouldReceive('commit');
 
@@ -507,7 +507,7 @@ class CartControllerTest extends TestCase
         $this->orderRepo->shouldReceive('create')->andReturn($order);
         $this->orderItemRepo->shouldReceive('create')->andReturn(true);
         $this->shippingRepo->shouldReceive('create')->andReturn(true);
-        $this->productRepo->shouldReceive('update')->andReturn(true);
+        $this->productRepo->shouldReceive('updateProductQuantity')->andReturn(true);
 
         DB::shouldReceive('rollback');
 
