@@ -5,6 +5,7 @@ namespace App\Repositories\Order;
 use App\Repositories\BaseRepository;
 use App\Models\Order;
 use App\Enums\OrderStatus;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class OrderRepository extends BaseRepository implements OrderRepositoryInterface
@@ -57,5 +58,21 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     public function getQuantity($order)
     {
         return $order->pivot->quantity;
+    }
+
+    public function showOrderSaleMonth()
+    {
+        return Order::whereYear('created_at', Carbon::now()->year)
+            ->whereStatus(OrderStatus::COMPLETED)
+            ->get()
+            ->groupBy(
+                function ($date) {
+                    return (int) $date->created_at->format('m');
+                }
+            )->map(
+                function ($item) {
+                    return array_sum($item->pluck('total_price')->toArray());
+                }
+            )->toArray();
     }
 }

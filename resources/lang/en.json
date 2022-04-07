@@ -53,6 +53,7 @@
     "Grand Total": "Grand Total",
     "Price": "Price",
     "Submit": "Submit",
-    "Cannot change status of order successfully or canceled": "Cannot change status of order successfully or canceled"
-
+    "Cannot change status of order successfully or canceled": "Cannot change status of order successfully or canceled",
+    "Revenue Statistics": "Revenue Statistics",
+    "Revenue": "Revenue"
 }
