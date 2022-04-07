@@ -24,4 +24,6 @@ interface ProductRepositoryInterface extends RepositoryInterface
     public function updateAvg($product_id, $avg_rate);
 
     public function getQuantity($product);
+    
+    public function updateProductQuantity($product_id, $quantity = 0, $sold = 0);
 }

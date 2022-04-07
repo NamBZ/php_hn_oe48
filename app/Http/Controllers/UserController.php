@@ -5,16 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\OrderStatus;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $orderRepo;
+
+    protected $productRepo;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        OrderRepositoryInterface $orderRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->orderRepo = $orderRepo;
+        $this->productRepo = $productRepo;
         $this->middleware('auth');
     }
     
@@ -26,7 +36,7 @@ class UserController extends Controller
     public function purchase()
     {
         $user = Auth::user();
-        $orders = $user->orders()->paginate(config('pagination.per_page'));
+        $orders = $this->orderRepo->getOrdersOfAuthUser();
 
         return view('user.order.purchase', [
             'user' => $user,
@@ -37,7 +47,7 @@ class UserController extends Controller
     public function orderDetail($id)
     {
         $user = Auth::user();
-        $order = $user->orders()->with('orderItems')->with('shipping')->findOrFail($id);
+        $order = $this->orderRepo->getOrderDetailsOfAuthUser($id);
 
         return view('user.order.details', [
             'user' => $user,
@@ -48,27 +58,35 @@ class UserController extends Controller
     public function orderCancel(Request $request, $id)
     {
         $user = Auth::user();
-        $order = $user->orders()->findOrFail($id);
+        $order = $this->orderRepo->getOrderDetailsOfAuthUser($id);
 
         if ($order->status != OrderStatus::NEW_ORDER &&
             $order->status != OrderStatus::IN_PROCCESS) {
             return redirect()->back()->with('error', __('Failed to cancel this order'));
         }
 
-        $order->status = OrderStatus::CANCELED;
+        $order_update = [
+            'status' => OrderStatus::CANCELED,
+        ];
 
         if ($request->reason_canceled) {
-            $order->reason_canceled = $request->reason_canceled;
+            $order_update['reason_canceled'] = $request->reason_canceled;
         }
 
         // Update product quantity when cancel
         foreach ($order->products as $product) {
-            $product->quantity += $product->pivot->quantity;
-            $product->sold -= $product->pivot->quantity;
-            $product->update();
+            // Update product quantity
+            $product_quantity_update = $product->quantity + $product->pivot->quantity;
+            $product_sold_update = $product->sold - $product->pivot->quantity;
+
+            $this->productRepo->updateProductQuantity(
+                $product->id,
+                $product_quantity_update,
+                $product_sold_update
+            );
         }
 
-        if ($order->save()) {
+        if ($this->orderRepo->update($order->id, $order_update)) {
             return redirect()->route('user.purchase')->with('success', __('Order is canceled'));
         }
 

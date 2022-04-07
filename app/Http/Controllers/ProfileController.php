@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use Illuminate\Support\Facades\File;
@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    protected $userRepo;
+
+    public function __construct(
+        UserRepositoryInterface $userRepo
+    ) {
+        $this->userRepo = $userRepo;
+    }
+
     public function editProfile()
     {
         $user = Auth::user();
@@ -35,9 +43,9 @@ class ProfileController extends Controller
             $file->move(public_path($dirImages), $newImage);
             $imageLink = asset($dirImages . $newImage);
         } else {
-            $imageLink = Auth::user()->avatar;
+            $imageLink = $user->avatar;
         }
-        $user->update([
+        $this->userRepo->update($user->id, [
             'name' => $request->name,
             'address' => $request->address,
             'avatar' => $imageLink,
@@ -61,7 +69,7 @@ class ProfileController extends Controller
         if (!Hash::check($request->current_password, $userPassword)) {
             return back()->withErrors(['current_password' => __('Old password not match')]);
         }
-        $user->update([
+        $this->userRepo->update($user->id, [
             'password' => Hash::make($request->new_password)
         ]);
 
