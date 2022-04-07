@@ -21,4 +21,6 @@ interface OrderRepositoryInterface extends RepositoryInterface
     public function relateToProduct($id);
 
     public function getQuantity($order);
+
+    public function showOrderSaleMonth();
 }
