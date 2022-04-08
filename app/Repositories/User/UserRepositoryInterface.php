@@ -11,4 +11,7 @@ interface UserRepositoryInterface extends RepositoryInterface
 
     //unblock user
     public function unblockUser($id);
+
+    //Send notification to user
+    public function sendNotify($id, $event);
 }

@@ -10,7 +10,16 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+    </script>
+
+    <!-- This makes the current user's id available in javascript -->
+    @auth
+        <script>
+            window.Laravel.userId = {{ auth()->user()->id }};
+        </script>
+    @endauth
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -36,11 +45,10 @@
             <p class="text-muted text-center">&copy; Copyright {{ config('app.name', 'Laravel') }}</p>
         </div>
     </footer>
-    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         $(function(){
             @if(Session::has('success'))
