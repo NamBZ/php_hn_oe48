@@ -60,6 +60,8 @@
     "Order #:code has been approved" : "Order #:code has been approved. Please check it again!",
     "Order #:code in transit" : "Order #:code in transit. Please check it again!",
     "Order #:code is completed" : "Order #:code is completed. Please check it again!",
-    "Order #:code is canceled" : "Order #:code is canceled. Please check it again!"
-
+    "Order #:code is canceled" : "Order #:code is canceled. Please check it again!",
+    "Report Order": "List of completed orders in the last week",
+    "From date": "From date",
+    "To date": "To date"
 }

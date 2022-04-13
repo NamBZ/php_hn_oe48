@@ -41,17 +41,17 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
         return $orders;
     }
-    
+
     public function getCustomer($relation, $orderId)
     {
         return $this->findOrFail($orderId)->user()->get();
     }
-    
+
     public function getOrderItems($relation, $orderId)
     {
         return $this->findOrFail($orderId)->orderItems()->with('product')->get();
     }
-    
+
     public function getShipping($relation, $orderId)
     {
         return $this->findOrFail($orderId)->shipping()->get();
@@ -83,5 +83,19 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                     return array_sum($item->pluck('total_price')->toArray());
                 }
             )->toArray();
+    }
+
+    public function getOrderCompletedOfWeek()
+    {
+        return $this->model::with('user')
+            ->whereBetween(
+                'created_at',
+                [
+                    Carbon::now()->subWeek()->startOfWeek(Carbon::SUNDAY),
+                    Carbon::now()->subWeek()->endOfWeek(Carbon::SATURDAY)
+                ]
+            )
+            ->whereStatus(OrderStatus::COMPLETED)
+            ->get();
     }
 }

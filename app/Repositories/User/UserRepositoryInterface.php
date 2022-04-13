@@ -14,4 +14,7 @@ interface UserRepositoryInterface extends RepositoryInterface
 
     //Send notification to user
     public function sendNotify($id, $event);
+    
+    //findAdmin
+    public function findAdmin();
 }

@@ -903,6 +903,8 @@
     "Order #:code has been approved" : "Đơn hàng #:code đã được chấp nhận giao. Vui lòng kiểm tra lại!",
     "Order #:code in transit" : "Đơn hàng #:code đang trên đường vận chuyển đến bạn. Vui lòng kiểm tra lại!",
     "Order #:code is completed" : "Đơn hàng #:code đã được đánh dấu hoàn thành. Vui lòng kiểm tra lại!",
-    "Order #:code is canceled" : "Đơn hàng #:code bị từ chối. Vui lòng kiểm tra lại!"
-
+    "Order #:code is canceled" : "Đơn hàng #:code bị từ chối. Vui lòng kiểm tra lại!",
+    "Report Order": "Danh sách các đơn hàng đã hoàn thành trong tuần trước",
+    "From date": "Từ ngày",
+    "To date": "Đến ngày"
 }
