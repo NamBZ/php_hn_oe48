@@ -2,6 +2,7 @@
 
 namespace App\Repositories\User;
 
+use App\Enums\UserRole;
 use App\Repositories\BaseRepository;
 use App\Models\User;
 use App\Enums\UserStatus;
@@ -49,5 +50,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
 
         return false;
+    }
+    
+    public function findAdmin()
+    {
+        return $this->model->where('role', UserRole::ADMIN)->get();
     }
 }

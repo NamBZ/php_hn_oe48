@@ -13,9 +13,9 @@ interface OrderRepositoryInterface extends RepositoryInterface
     public function getOrderDetailsOfAuthUser($order_id);
 
     public function getCustomer($relation, $orderId);
-    
+
     public function getOrderItems($relation, $orderId);
-    
+
     public function getShipping($relation, $orderId);
 
     public function relateToProduct($id);
@@ -23,4 +23,6 @@ interface OrderRepositoryInterface extends RepositoryInterface
     public function getQuantity($order);
 
     public function showOrderSaleMonth();
+
+    public function getOrderCompletedOfWeek();
 }

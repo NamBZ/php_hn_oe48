@@ -15,3 +15,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
 mix.postCss('resources/css/app.css', 'public/css/style.css');
+mix.js('resources/js/bootstrap.js', 'public/js');
