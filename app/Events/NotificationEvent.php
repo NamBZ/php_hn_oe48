@@ -33,6 +33,6 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('order.' . $this->order->id);
+        return new PrivateChannel('order.' . $this->order->user_id);
     }
 }

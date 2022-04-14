@@ -94,7 +94,7 @@
                 <li class="nav-item bell">
                     <a class="nav-link navbar-text position-relative">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger pending">{{ Auth::user()->unreadNotifications->count() }}</span>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger pending">{{ Auth::user()->unreadNotifications->count() > 0 ? Auth::user()->unreadNotifications->count() : '' }}</span>
                     </a>
                     <ul class="notifications m-0 p-0" id="notifications">
                         @foreach (Auth::user()->notifications as $notification)
