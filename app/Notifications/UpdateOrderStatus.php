@@ -15,7 +15,7 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
 
     protected $order;
 
-    protected $orderStatusMessage;
+    protected $message;
 
     /**
      * Create a new notification instance.
@@ -26,13 +26,18 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
     {
         $this->order = $order;
 
-        $this->orderStatusMessage = [
+        $orderStatusMessage = [
             OrderStatus::NEW_ORDER => 'recently added',
             OrderStatus::IN_PROCCESS => 'has been approved',
             OrderStatus::IN_SHIPPING => 'in transit',
             OrderStatus::COMPLETED => 'is completed',
             OrderStatus::CANCELED => 'is canceled',
         ];
+
+        $this->message =  __(
+            'Order #:code ' . $orderStatusMessage[$order->status],
+            ['code' => $order->order_code]
+        );
     }
 
     /**
@@ -46,6 +51,7 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
         return [
             'database',
             'broadcast',
+            'mail',
         ];
     }
 
@@ -58,9 +64,13 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('[' . env('APP_NAME') . '] ' . __('Order Status Update'))
+            ->line($this->message)
+            ->action(
+                __('Click here to view your order'),
+                route('user.purchase.details', $this->order->id)
+            )
+            ->line(__('Thank you for your order!'));
     }
 
     /**
@@ -76,10 +86,7 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
             'read_at' => null,
             'data' => [
                 'title' => __('Order Status Update'),
-                'message' => __(
-                    'Order #:code ' . $this->orderStatusMessage[$this->order->status],
-                    ['code' => $this->order->order_code]
-                ),
+                'message' => $this->message,
                 'link' => route('user.purchase.details', $this->order->id),
             ],
         ];
@@ -95,10 +102,7 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
     {
         return [
             'title' => __('Order Status Update'),
-            'message' => __(
-                'Order #:code ' . $this->orderStatusMessage[$this->order->status],
-                ['code' => $this->order->order_code]
-            ),
+            'message' => $this->message,
             'link' => route('user.purchase.details', $this->order->id),
         ];
     }

@@ -101,4 +101,12 @@ class UserTest extends ModelTestCase
             $key_through
         );
     }
+
+    public function testReceivesBroadcastNotificationsChannel()
+    {
+        $user = User::factory()->make();
+        $user->id = 1;
+
+        $this->assertEquals('order.1', $user->receivesBroadcastNotificationsOn());
+    }
 }
