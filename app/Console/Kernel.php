@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
         sendOrderReportToAdmin::class,
     ];
 
-    protected function schedule(Schedule $schedule)
+    public function schedule(Schedule $schedule)
     {
         $schedule->command('mail:orderReport')
             ->weeklyOn(7, '8:00');

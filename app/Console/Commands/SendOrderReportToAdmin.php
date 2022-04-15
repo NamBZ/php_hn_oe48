@@ -15,14 +15,14 @@ class SendOrderReportToAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'mail:orderReport';
+    public $signature = 'mail:orderReport';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send Email to Admin notify the list of completed orders at 8am every Sunday';
+    public $description = 'Send Email to Admin notify the list of completed orders at 8am every Sunday';
 
     /**
      * Create a new command instance.
