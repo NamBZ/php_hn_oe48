@@ -68,13 +68,21 @@ class OrderController extends Controller
         }
         if ($request->status == OrderStatus::CANCELED) {
             foreach ($this->orderRepository->relateToProduct($id) as $product) {
-                $product->quantity += $this->productRepository->getQuantity($product);
-                $product->sold -= $this->productRepository->getQuantity($product);
-                $product->update();
+                $product_quantity_update = $product->quantity + $this->productRepository->getQuantity($product);
+                $product_sold_update = $product->sold - $this->productRepository->getQuantity($product);
+                $this->productRepository->updateProductQuantity(
+                    $product->id,
+                    $product_quantity_update,
+                    $product_sold_update
+                );
             }
-            $order->update(['reason_canceled' => $request->reason_canceled]);
+            $this->orderRepository->update($id, [
+                'reason_canceled' => $request->reason_canceled
+            ]);
         }
-        $order->update(['status' => $request->status]);
+        $this->orderRepository->update($id, [
+            'status' => $request->status
+        ]);
 
         // Send notification to user
         $eventNotify = new UpdateOrderStatus($order);
