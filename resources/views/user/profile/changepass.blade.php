@@ -9,7 +9,7 @@
         <div class="align-items-center mb-3">
             <h5 class="text-center">{{ __('Change Password') }}</h5>
         </div>
-        <form method="post" action="{{ route('password.update') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('profile.password.update') }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row mb-3">
