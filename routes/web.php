@@ -93,7 +93,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('profile', [ProfileController::class, 'editProfile'])->name('profile');
     Route::patch('profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::get('profile/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
-    Route::put('profile/change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
+    Route::put('profile/change-password', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password.update');
 
     // User
     Route::get('user', [UserController::class, 'index'])->name('user');
