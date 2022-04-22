@@ -520,7 +520,7 @@ class CartControllerTest extends TestCase
         $this->assertArrayHasKey('cart', session()->all());
     }
 
-/*    // Order fail Eception
+    // Order fail Eception
     public function testOrderFailException()
     {
         DB::shouldReceive('beginTransaction');
@@ -567,8 +567,7 @@ class CartControllerTest extends TestCase
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals(route('cart'), $response->headers->get('Location'));
         $this->assertArrayHasKey('error', session()->all());
         $this->assertArrayHasKey('cart', session()->all());
-    }*/
+    }
 }
