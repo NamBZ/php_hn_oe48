@@ -41,7 +41,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     {
         return $this->model->load('parent')
             ->whereNull('parent_id')
-            ->where('id', '!=', $id)
+            ->whereNotIn('id', $this->getCategoryID($id))
             ->orderBy('id', 'DESC')
             ->get();
     }
